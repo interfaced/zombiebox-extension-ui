@@ -107,6 +107,104 @@
 #### Описание
 Вызывается после изменения выбранного [элемента](#markdown-header-items).
 
+## Верстка (markup)
+
+### Объекты
+
+* Контейнер — внешняя оболочка виджета. Служит для скрытия не вошедших в него [элементов](#markdown-header-items).
+* Враппер — служит для позиционирования слайдера и определения количества видимых [элементов](#markdown-header-items).
+* Слайдер — служит для перемещения [элементов](#markdown-header-items) в рамках враппера.
+
+### Нюансы
+
+* Для горизонтального однострочного списка слайдер лучше делать `display: table`, а итемы — `display: table-cell`, чтобы слайдер автоматически растягивался под все итемы.
+* Для вертикального однострочного списка достаточно, чтобы слайдер и элементы были блочными.
+* Для многострочных списков нужно реализовывать отдельные решения.
+* Размеры и враппера и слайдера должны быть кратны размерам [элемента](#markdown-header-items).
+* Отступов между [элементами](#markdown-header-items) быть не должно. Однако, если они визуально должны присутствовать, можно реализовать их внутрь самих элементов при помощи вложенных блоков.
+
+## Рецепты (cookbook)
+
+### Создание горизонтального списка (horizontal)
+
+1. В шаблоне сцены добавьте строчку `{{% zb.ui.BaseList, {}, list }}`;
+2. В основном файле сцены подключите зависимость: `goog.require('zb.ui.DataList')`;
+3. В конструкторе сцены создайте [источник данных](#markdown-header-source) с требуемыми данными: `var source = new zb.ui.DataList(['one', 'two', 'three'])`;
+4. Затем там же, но после `goog.base(this)` установите источник данных: `this._exported.list.setSource(source)`;
+5. В браузере должен появиться горизонтальный список элементов **one two three**.
+
+### Создание вертикального списка (vertical)
+
+1. В шаблоне сцены добавьте строчку `{{% zb.ui.BaseList, {isVertical: true}, list }}`;
+2. В основном файле сцены подключите зависимость: `goog.require('zb.ui.DataList')`;
+3. В конструкторе сцены создайте [источник данных](#markdown-header-source) с требуемыми данными: `var source = new zb.ui.DataList(['one', 'two', 'three'])`;
+4. Затем там же, но после `goog.base(this)` установите источник данных: `this._exported.list.setSource(source)`;
+5. В браузере должен появиться вертикальный список элементов **one two three**.
+
+### Создание списка из конструктора сцены (constructor)
+
+1. В основном файле сцены подключите зависимости:
+
+		goog.require('zb.ui.BaseList');
+		goog.require('zb.ui.DataList');
+
+2. В конструкторе сцены после `goog.base(this)` напишите:
+
+		var source = new zb.ui.DataList(['one', 'two', 'three']);
+		var list = new zb.ui.BaseList({source: source});
+		this.appendWidget(list);
+		this._container.appendChild(list.getContainer());
+
+3. В браузере должен появиться горизонтальный список элементов **one two three**.
+
+### Создание списка с нестандартными элементами (custom)
+
+1. Создайте [горизонтальный список](#markdown-header-horizontal);
+2. В шаблоне сцены замените `{{% zb.ui.BaseList, {}, list }}` на `{{% zb.ui.BaseList, {itemClass: project.widgets.MyCustomItem}, list }}`;
+3. Создайте папку `app/widgets/my-custom-item` с файлами `my-custom-item.js`, `my-custom-item.jst`, `my-custom-item.css`;
+4. В файле `my-custom-item.js` определите класс [элемента](#markdown-header-items):
+
+		goog.provide('project.widgets.MyCustomItem');
+		goog.require('project.widgets.templates.myCustomItem.myCustomItem');
+		goog.require('zb.html');
+		goog.require('zb.ui.BaseListItem');
+		
+		/**
+		 * @param {zb.ui.IBaseListItem.Input} params
+		 * @extends {zb.ui.BaseListItem}
+		 * @constructor
+		 */
+		project.widgets.MyCustomItem = function(params) {
+			goog.base(this, params);
+		};
+		goog.inherits(project.widgets.MyCustomItem, zb.ui.BaseListItem);
+		
+		/**
+		 * @inheritDoc
+		 */
+		project.widgets.MyCustomItem.prototype._createContainer = function() {
+			var result = project.widgets.templates.myCustomItem.myCustomItem({title: this._data});
+		
+			this._container = (zb.html.findFirstElementNode(result.root));
+		};
+
+5. В файле `my-custom-item.jst` определите шаблон [элемента](#markdown-header-items):
+
+		{{$ project.widgets.templates.myCustomItem.myCustomItem }}
+		{{* this.title string }}
+		
+		<div class="w-my-custom-item">
+			<div class="w-my-custom-item__title">{{- this.title }}</div>
+		</div>
+
+6. В файле `my-custom-item.css` определите стили [элемента](#markdown-header-items):
+
+		.w-my-custom-item {
+			display: table-cell;
+		}
+
+7. В браузере должен появиться горизонтальный список элементов **one two three**.
+
 ## Особенности поведения:
 1. На экран должно вмещаться `(padding - loadOnLeft) * lineSize` [элементов](#markdown-header-items), иначе будет некрасиво срабатывать метод `_adjustPosition()`.
 2. Последняя строка имеет особое поведение, т.к. там может быть не полное количество [элементов](#markdown-header-items).
