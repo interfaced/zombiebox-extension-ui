@@ -24,7 +24,7 @@ describe('zb.ui.Throbber', function() {
 			expect(throbber._container).instanceOf(HTMLElement);
 			expect(throbber._step).equal(throbber.STEP);
 			expect(throbber._width).equal(throbber.WIDTH);
-			expect(throbber._timer._delay).equal(throbber.STEP_INTERVAL);
+			expect(throbber._stepInterval).equal(throbber.STEP_INTERVAL);
 		});
 		it('Only container argument', function() {
 			var container = document.createElement('div');
@@ -33,7 +33,7 @@ describe('zb.ui.Throbber', function() {
 			expect(throbber._container).equal(container);
 			expect(throbber._step).equal(throbber.STEP);
 			expect(throbber._width).equal(throbber.WIDTH);
-			expect(throbber._timer._delay).equal(throbber.STEP_INTERVAL);
+			expect(throbber._stepInterval).equal(throbber.STEP_INTERVAL);
 		});
 		it('Only params argument', function() {
 			var throbber = new Throbber({
@@ -45,7 +45,7 @@ describe('zb.ui.Throbber', function() {
 			expect(throbber._container).instanceOf(HTMLElement);
 			expect(throbber._step).equal(100);
 			expect(throbber._width).equal(200);
-			expect(throbber._timer._delay).equal(300);
+			expect(throbber._stepInterval).equal(300);
 		});
 		it('Only params argument with undefined container', function() {
 			var throbber = new Throbber(undefined, {
@@ -57,7 +57,7 @@ describe('zb.ui.Throbber', function() {
 			expect(throbber._container).instanceOf(HTMLElement);
 			expect(throbber._step).equal(100);
 			expect(throbber._width).equal(200);
-			expect(throbber._timer._delay).equal(300);
+			expect(throbber._stepInterval).equal(300);
 		});
 		it('Both arguments', function() {
 			var container = document.createElement('div');
@@ -70,7 +70,7 @@ describe('zb.ui.Throbber', function() {
 			expect(throbber._container).equal(container);
 			expect(throbber._step).equal(100);
 			expect(throbber._width).equal(200);
-			expect(throbber._timer._delay).equal(300);
+			expect(throbber._stepInterval).equal(300);
 		});
 	});
 

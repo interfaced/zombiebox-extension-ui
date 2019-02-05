@@ -1,6 +1,6 @@
 {
   "name": "zombiebox-extension-ui",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/interfaced/zombiebox-extension-ui/issues"
@@ -19,9 +19,10 @@
     "karma-babel-preprocessor": "^6.0.1",
     "chai": "^3.5.0",
     "dirty-chai": "^1.2.2",
-    "eslint": "^3.12.2",
-    "eslint-config-interfaced": "git+ssh://git@bitbucket.org/interfaced/eslint-config-interfaced.git",
-    "eslint-plugin-goog": "git+ssh://git@bitbucket.org/interfaced/eslint-plugin-goog.git",
+    "eslint": "3.19.0",
+    "eslint-config-interfaced": "0.2.0",
+    "eslint-plugin-goog": "0.2.0",
+    "eslint-plugin-interfaced": "0.1.0",
     "karma": "^1.1.0",
     "karma-chai": "^0.1.0",
     "karma-closure": "github:ifaced/karma-closure",
