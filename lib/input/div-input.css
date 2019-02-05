@@ -27,13 +27,12 @@
 	}
 	.w-zbui-div-input__input._fake {
 		color: transparent;
-		border-right: 1px solid transparent;
+		border-right: solid transparent;
 	}
 
 .w-zbui-div-input._caret-visible {}
 	.w-zbui-div-input._caret-visible .w-zbui-div-input__input._fake {
 		border-right-color: #000;
-		animation: inputCaret 1s linear 0s infinite;
 	}
 
 .w-zbui-div-input__input._active {}
