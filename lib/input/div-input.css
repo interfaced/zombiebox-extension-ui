@@ -12,6 +12,7 @@
 			display: block;
 		}
 	.w-zbui-div-input__input {
+		white-space: pre;
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -26,21 +27,11 @@
 	}
 	.w-zbui-div-input__input._fake {
 		color: transparent;
+		border-right: 1px solid #000;
 	}
-		.w-zbui-div-input__input._fake:after {
-			width: 1px;
-			background-color: #000;
-			content: '';
-			display: none;
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-		}
 
 .w-zbui-div-input._caret-visible {}
-	.w-zbui-div-input._caret-visible .w-zbui-div-input__input._fake:after {
-		display: block;
+	.w-zbui-div-input._caret-visible .w-zbui-div-input__input._fake {
 		animation: inputCaret 1s linear 0s infinite;
 	}
 

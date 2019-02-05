@@ -259,7 +259,6 @@ describe('zb.ui.BaseListDataList: add one item', function() {
 		return then('done');
 	});
 
-	// TODO: протестировать удаление элемента
 	// TODO: протестировать работу с DynamicList
 
 });

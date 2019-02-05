@@ -1,6 +1,6 @@
 {
   "name": "zombiebox-extension-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "zombiebox-extension.js",
   "scripts": {
     "test": "karma start karma.components.conf.js --single-run"
