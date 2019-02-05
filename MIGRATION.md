@@ -1,6 +1,17 @@
 Руководство по миграции
 -----------------------
 
+## С версии 0.5.2 на версию 0.5.3
+
+В связи с изменением обработки настроек `zb.ui.DynamicList` нужно соблюдать следующие условия при их задании:
+
+* `startLoadingOnItemsLeft`, `frameSize`, `initialBufferSize` и `bufferSize` должны быть больше нуля и не равны `NaN`;
+* `frameSize` должен быть больше или равен `startLoadingOnItemsLeft`;
+* `initialBufferSize` должен быть больше или равен `frameSize`;
+* `bufferSize` должен быть больше или равен `frameSize`;
+* комбинация настроек `bufferSize - startLoadingOnItemsLeft * 2 < frameSize`
+вызыват рекурсию и не должа быть использована.
+
 ## С версии 0.5.1 на версию 0.5.2
 
 Миграция не подразумевает каких-либо изменений.
