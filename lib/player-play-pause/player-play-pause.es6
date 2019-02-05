@@ -9,7 +9,7 @@ zb.ui.PlayerPlayPause = class extends zb.ui.Button {
 	constructor(opt_container, opt_data) {
 		super(opt_container, opt_data);
 
-		this._player = null;
+		this.setPlayer(null);
 
 		this._onPause = this._onPause.bind(this);
 		this._onPlay = this._onPlay.bind(this);
@@ -30,9 +30,30 @@ zb.ui.PlayerPlayPause = class extends zb.ui.Button {
 		}
 
 		this._player = player;
+		this.updateView();
 
 		if (this._player) {
 			this._bindEvents();
+		}
+	}
+
+
+	/**
+	 */
+	updateView() {
+		if (this._player) {
+			switch (this._player.getState()) {
+				case zb.device.IVideo.State.INITED:
+				case zb.device.IVideo.State.PAUSED:
+				case zb.device.IVideo.State.STOPPED:
+				case zb.device.IVideo.State.SEEKING:
+					this._setPaused(true);
+					break;
+				default:
+					this._setPaused(false);
+			}
+		} else {
+			this._setPaused(true);
 		}
 	}
 
