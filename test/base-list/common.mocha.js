@@ -1,41 +1,39 @@
-describe('zb.ui.BaseListDataList', function() {
-	var expect = chai.expect;
-	var given = mochaTestSteps.given;
-	var when = mochaTestSteps.when;
-	var then = mochaTestSteps.then;
+describe('zb.ui.widgets.BaseListDataList', () => {
+	const expect = chai.expect;
+	const given = mochaTestSteps.given;
+	const when = mochaTestSteps.when;
+	const then = mochaTestSteps.then;
 
-	var helper = zb.ui.test.baseListHelper;
-	var BaseListDataList = zb.ui.BaseListDataList;
+	const helper = zb.ui.test.baseListHelper;
+	const BaseListDataList = zb.ui.widgets.BaseListDataList;
 
-	describe('Class', function() {
-		it('class exists', function() {
+	describe('Class', () => {
+		it('class exists', () => {
 			expect(BaseListDataList)
 				.is.a('function');
 		});
-		it('default constructor (options, changeCallback, selectCallback)', function() {
-			expect(function() {
-				return new BaseListDataList(
-					{},
-					function(items) {},
-					function(newItem, newIndex, oldItem, oldIndex) {}
-				);
-			}).not.to.throw();
+		it('default constructor (options, changeCallback, selectCallback)', () => {
+			expect(() => new BaseListDataList(
+				{},
+				items => {},
+				(newItem, newIndex, oldItem, oldIndex) => {}
+			)).not.to.throw();
 		});
 	});
 
-	describe('Logic', function() {
-		var buffer;
+	describe('Logic', () => {
+		let buffer;
 
-		beforeEach(function() {
+		beforeEach(() => {
 			buffer = new BaseListDataList(
 				{},
-				function(items) {},
-				function(newItem, newIndex, oldItem, oldIndex) {}
+				items => {},
+				(newItem, newIndex, oldItem, oldIndex) => {}
 			);
 		});
 
-		it('Public methods should exist', function() {
-			var publicMethodsNames = [
+		it('Public methods should exist', () => {
+			const publicMethodsNames = [
 				'setSource',
 				'getSource',
 				'hasSource',
@@ -75,24 +73,22 @@ describe('zb.ui.BaseListDataList', function() {
 				'setGlobalIndex'
 			];
 
-			publicMethodsNames.forEach(function(methodName) {
+			publicMethodsNames.forEach((methodName) => {
 				expect(buffer[methodName]).is.a('function');
 			});
 		});
 
-		it('initially has no source (null)', function() {
+		it('initially has no source (null)', () => {
 			expect(buffer.getSource()).is.null;
 		});
 
-		it('set source and get it back', function() {
-			var dataList = helper.createDefaultDataList();
+		it('set source and get it back', () => {
+			const dataList = helper.createDefaultDataList();
 
 			// WHEN
-			when('set new source', function() {
-				return helper.setBufferSource(buffer, dataList);
-			});
+			when('set new source', () => helper.setBufferSource(buffer, dataList));
 			// THEN
-			then('set new source', function() {
+			then('set new source', () => {
 				expect(buffer.getSource()).equal(dataList);
 			});
 		});

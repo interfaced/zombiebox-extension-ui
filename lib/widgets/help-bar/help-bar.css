@@ -1,0 +1,7 @@
+.w-zbui-help-bar {}
+	.w-zbui-help-bar__wrap {
+		float: right;
+	}
+	.w-zbui-help-bar .w-zbui-help-bar-item {
+		float: left;
+	}

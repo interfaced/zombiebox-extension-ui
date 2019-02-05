@@ -1,26 +1,24 @@
-describe('zb.ui.BaseListDataList: getters', function() {
-	var expect = chai.expect;
-	var given = mochaTestSteps.given;
-	var when = mochaTestSteps.when;
-	var then = mochaTestSteps.then;
+describe('zb.ui.widgets.BaseListDataList: getters', () => {
+	const expect = chai.expect;
+	const given = mochaTestSteps.given;
+	const when = mochaTestSteps.when;
+	const then = mochaTestSteps.then;
 
-	var buffer;
-	var helper = zb.ui.test.baseListHelper;
+	let buffer;
+	const helper = zb.ui.test.baseListHelper;
 
-	beforeEach(function() {
+	beforeEach(() => {
 		// GIVEN
-		given('created empty baselist-datalist', function() {
+		given('created empty baselist-datalist', () => {
 			buffer = helper.createBuffer();
 		});
 	});
 
-	it('When null', function() {
+	it('When null', () => {
 		// WHEN
-		when('set source', function() {
-			return helper.setBufferSource(buffer, null);
-		});
+		when('set source', () => helper.setBufferSource(buffer, null));
 		// THEN
-		then('local variables has values', function() {
+		then('local variables has values', () => {
 			expect(buffer.getSourceStart()).eql(NaN);
 			expect(buffer.getSourceEnd()).eql(NaN);
 			expect(buffer.getSourceIndex()).eql(NaN);
@@ -40,14 +38,14 @@ describe('zb.ui.BaseListDataList: getters', function() {
 		return then('done');
 	});
 
-	it('When empty array', function() {
+	it('When empty array', () => {
 		// WHEN
-		when('set source', function() {
-			var dataList = helper.createEmptyDataList();
+		when('set source', () => {
+			const dataList = helper.createEmptyDataList();
 			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('local variables has values', function() {
+		then('local variables has values', () => {
 			expect(buffer.getSourceStart()).eql(NaN);
 			expect(buffer.getSourceEnd()).eql(NaN);
 			expect(buffer.getSourceIndex()).eql(NaN);
@@ -67,15 +65,15 @@ describe('zb.ui.BaseListDataList: getters', function() {
 		return then('done');
 	});
 
-	it('When size is 0', function() {
+	it('When size is 0', () => {
 		// WHEN
-		when('set source', function() {
-			var array = helper.createDefaultArray().slice(0, 1);
-			var dataList = new zb.ui.DataList(array);
+		when('set source', () => {
+			const array = helper.createDefaultArray().slice(0, 1);
+			const dataList = new zb.ui.data.List(array);
 			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('local variables has values', function() {
+		then('local variables has values', () => {
 			expect(buffer.getSourceStart()).eql(0);
 			expect(buffer.getSourceEnd()).eql(0);
 			expect(buffer.getSourceIndex()).eql(0);
@@ -95,15 +93,15 @@ describe('zb.ui.BaseListDataList: getters', function() {
 		return then('done');
 	});
 
-	it('When size is 2', function() {
+	it('When size is 2', () => {
 		// WHEN
-		when('set source', function() {
-			var array = helper.createDefaultArray().slice(0, 2);
-			var dataList = new zb.ui.DataList(array);
+		when('set source', () => {
+			const array = helper.createDefaultArray().slice(0, 2);
+			const dataList = new zb.ui.data.List(array);
 			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('local variables has values', function() {
+		then('local variables has values', () => {
 			expect(buffer.getSourceStart()).eql(0);
 			expect(buffer.getSourceEnd()).eql(1);
 			expect(buffer.getSourceIndex()).eql(0);
@@ -123,15 +121,15 @@ describe('zb.ui.BaseListDataList: getters', function() {
 		return then('done');
 	});
 
-	it('When size is 3', function() {
+	it('When size is 3', () => {
 		// WHEN
-		when('set source', function() {
-			var array = helper.createDefaultArray().slice(0, 3);
-			var dataList = new zb.ui.DataList(array);
+		when('set source', () => {
+			const array = helper.createDefaultArray().slice(0, 3);
+			const dataList = new zb.ui.data.List(array);
 			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('local variables has values', function() {
+		then('local variables has values', () => {
 			expect(buffer.getSourceStart()).eql(0);
 			expect(buffer.getSourceEnd()).eql(2);
 			expect(buffer.getSourceIndex()).eql(0);

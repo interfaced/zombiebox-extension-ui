@@ -1,64 +1,64 @@
-describe('zb.ui.Button', function() {
-	var expect = chai.expect;
+describe('zb.ui.widgets.Button', () => {
+	const expect = chai.expect;
 
-	var Button = zb.ui.Button;
+	const Button = zb.ui.widgets.Button;
 
-	describe('Class', function() {
-		it('class: zb.ui.Button', function() {
+	describe('Class', () => {
+		it('class: zb.ui.widgets.Button', () => {
 			expect(Button).is.a('function');
 		});
-		it('constructor: default', function() {
-			expect(function() {
-				new Button;
+		it('constructor: default', () => {
+			expect(() => {
+				new Button();
 			}).not.to.throw();
 		});
 	});
 
-	describe('Arguments', function() {
-		it('No arguments', function() {
-			var instance = new Button;
+	describe('Arguments', () => {
+		it('No arguments', () => {
+			const instance = new Button();
 
 			expect(instance.getContainer()).instanceOf(HTMLElement);
 			expect(instance.getData()).to.be.undefined;
 		});
-		it('Only container argument', function() {
-			var container = document.createElement('div');
-			var instance = new Button(container);
+		it('Only container argument', () => {
+			const container = document.createElement('div');
+			const instance = new Button(container);
 
 			expect(instance.getContainer()).equal(container);
 			expect(instance.getData()).to.be.undefined;
 		});
-		it('Only data argument', function() {
-			var instance = new Button('some data');
+		it('Only data argument', () => {
+			const instance = new Button('some data');
 
 			expect(instance.getContainer()).instanceOf(HTMLElement);
 			expect(instance.getData()).equal('some data');
 		});
-		it('Only data argument with undefined container', function() {
-			var instance = new Button(undefined, 'some data');
+		it('Only data argument with undefined container', () => {
+			const instance = new Button(undefined, 'some data');
 
 			expect(instance.getContainer()).instanceOf(HTMLElement);
 			expect(instance.getData()).equal('some data');
 		});
-		it('Both arguments', function() {
-			var container = document.createElement('div');
-			var instance = new Button(container, 'some data');
+		it('Both arguments', () => {
+			const container = document.createElement('div');
+			const instance = new Button(container, 'some data');
 
 			expect(instance.getContainer()).equal(container);
 			expect(instance.getData()).equal('some data');
 		});
 	});
 
-	describe('Work with data', function() {
-		var button = new Button;
+	describe('Work with data', () => {
+		const button = new Button();
 
-		it('methods exists', function() {
+		it('methods exists', () => {
 			expect(button.setData).is.a('function');
 			expect(button.getData).is.a('function');
 		});
 
-		it('method works', function() {
-			var data = {
+		it('method works', () => {
+			const data = {
 				a: 'a',
 				b: 'b'
 			};
@@ -68,29 +68,29 @@ describe('zb.ui.Button', function() {
 		});
 	});
 
-	describe('Event', function() {
-		var button;
-		var callbacks = {
-			EVENT_CLICK: function() {}
+	describe('Event', () => {
+		let button;
+		const callbacks = {
+			EVENT_CLICK() {}
 		};
-		var eventClick = sinon.spy(callbacks, 'EVENT_CLICK');
+		const eventClick = sinon.spy(callbacks, 'EVENT_CLICK');
 
-		beforeEach(function() {
-			button = new Button;
+		beforeEach(() => {
+			button = new Button();
 		});
 
-		afterEach(function() {
+		afterEach(() => {
 			button = null;
 
-			eventClick.reset();
+			eventClick.resetHistory();
 		});
 
-		it('event methods exists', function() {
+		it('event methods exists', () => {
 			expect(button.onClick).is.a('function');
 			expect(button.offClick).is.a('function');
 		});
 
-		it('event firing', function() {
+		it('event firing', () => {
 			button.setData({
 				a: 'a',
 				b: 'b'
@@ -107,7 +107,7 @@ describe('zb.ui.Button', function() {
 				});
 		});
 
-		it('event not firing', function() {
+		it('event not firing', () => {
 			button.onClick(eventClick);
 
 			button.processKey(zb.device.input.Keys.BACK);

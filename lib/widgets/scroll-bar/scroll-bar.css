@@ -1,0 +1,18 @@
+.w-zbui-scroll-bar {
+	height: 10px;
+	background-color: #fff;
+	position: relative;
+}
+	.w-zbui-scroll-bar__thumb {
+		background-color: #000;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+
+.w-zbui-scroll-bar._is-vertical {
+	width: 10px;
+	height: auto;
+}

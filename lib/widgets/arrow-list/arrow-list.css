@@ -1,0 +1,21 @@
+.w-zbui-arrow-list {}
+	.w-zbui-arrow-list__arrow._up,
+	.w-zbui-arrow-list__arrow._down {
+		display: none;
+	}
+	.w-zbui-arrow-list__arrow._disabled {
+		display: none;
+	}
+
+.w-zbui-arrow-list._is-vertical {}
+	.w-zbui-arrow-list._is-vertical .w-zbui-arrow-list__arrow._left,
+	.w-zbui-arrow-list._is-vertical .w-zbui-arrow-list__arrow._right {
+		display: none;
+	}
+	.w-zbui-arrow-list._is-vertical .w-zbui-arrow-list__arrow._up,
+	.w-zbui-arrow-list._is-vertical .w-zbui-arrow-list__arrow._down {
+		display: block;
+	}
+	.w-zbui-arrow-list._is-vertical .w-zbui-arrow-list__arrow._disabled {
+		display: none;
+	}

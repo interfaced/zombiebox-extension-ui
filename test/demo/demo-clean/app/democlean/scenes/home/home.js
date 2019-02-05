@@ -1,29 +1,28 @@
 goog.provide('democlean.scenes.Home');
-goog.require('zb.layers.CuteScene');
 goog.require('democlean.scenes.templates.home');
-
+goog.require('zb.layers.CuteScene');
 
 
 /**
- * @constructor
- * @extends {zb.layers.CuteScene}
  */
-democlean.scenes.Home = function() {
-	goog.base(this);
+democlean.scenes.Home = class extends zb.layers.CuteScene {
+	/**
+	 */
+	constructor() {
+		super();
+	}
+
+	/**
+	 * @override
+	 */
+	_renderTemplate() {
+		return democlean.scenes.templates.home(this._getTemplateData(), this._getTemplateOptions());
+	}
+
+	/**
+	 * @abstract
+	 * @type {democlean.scenes.templates.HomeOut}
+	 * @protected
+	 */
+	_templateResult() {}
 };
-goog.inherits(democlean.scenes.Home, zb.layers.CuteScene);
-
-
-/**
- * @inheritDoc
- */
-democlean.scenes.Home.prototype._renderTemplate = function() {
-	return democlean.scenes.templates.home(this._getTemplateData(), this._getTemplateOptions());
-};
-
-
-/**
- * @type {democlean.scenes.templates.HomeOut}
- * @protected
- */
-democlean.scenes.Home.prototype._templateResult;

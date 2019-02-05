@@ -1,0 +1,15 @@
+.w-zbui-abstract-marquee {
+	display: block;
+	overflow: hidden;
+}
+	.w-zbui-abstract-marquee__slider {
+		white-space: nowrap;
+		display: inline;
+		position: relative;
+	}
+
+.w-zbui-abstract-marquee._is-vertical {}
+	.w-zbui-abstract-marquee._is-vertical .w-zbui-abstract-marquee__slider {
+		white-space: normal;
+		display: block;
+	}

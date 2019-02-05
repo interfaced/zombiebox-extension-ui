@@ -1,17 +1,17 @@
-describe('zb.ui.DynamicList options', function() {
-	var expect = chai.expect;
-	var DynamicList = zb.ui.DynamicList;
+describe('zb.ui.data.DynamicList options', () => {
+	const expect = chai.expect;
+	const DynamicList = zb.ui.data.DynamicList;
 
-	describe('Should not throw error', function() {
-		it('With default options', function() {
-			expect(function() {
-				new DynamicList(function() {});
+	describe('Should not throw error', () => {
+		it('With default options', () => {
+			expect(() => {
+				new DynamicList(() => {});
 			}).not.to.throw();
 		});
 
-		it('With custom options', function() {
-			expect(function() {
-				new DynamicList(function() {}, {
+		it('With custom options', () => {
+			expect(() => {
+				new DynamicList(() => {}, {
 					startFrom: 0,
 					startLoadingOnItemsLeft: 5,
 					frameSize: 15,
@@ -22,10 +22,10 @@ describe('zb.ui.DynamicList options', function() {
 		});
 	});
 
-	describe('Should throw error', function() {
-		it('With NaN option', function() {
-			expect(function() {
-				new DynamicList(function() {}, {
+	describe('Should throw error', () => {
+		it('With NaN option', () => {
+			expect(() => {
+				new DynamicList(() => {}, {
 					startFrom: 0,
 					startLoadingOnItemsLeft: NaN,
 					frameSize: 15,
@@ -35,9 +35,9 @@ describe('zb.ui.DynamicList options', function() {
 			}).to.throw();
 		});
 
-		it('With zero option', function() {
-			expect(function() {
-				new DynamicList(function() {}, {
+		it('With zero option', () => {
+			expect(() => {
+				new DynamicList(() => {}, {
 					startFrom: 0,
 					startLoadingOnItemsLeft: 5,
 					frameSize: 0,
@@ -47,9 +47,9 @@ describe('zb.ui.DynamicList options', function() {
 			}).to.throw();
 		});
 
-		it('With negative option', function() {
-			expect(function() {
-				new DynamicList(function() {}, {
+		it('With negative option', () => {
+			expect(() => {
+				new DynamicList(() => {}, {
 					startFrom: 0,
 					startLoadingOnItemsLeft: 5,
 					frameSize: 15,
@@ -59,9 +59,9 @@ describe('zb.ui.DynamicList options', function() {
 			}).to.throw();
 		});
 
-		it('With wrong frameSize', function() {
-			expect(function() {
-				new DynamicList(function() {}, {
+		it('With wrong frameSize', () => {
+			expect(() => {
+				new DynamicList(() => {}, {
 					startFrom: 0,
 					startLoadingOnItemsLeft: 18,
 					frameSize: 12,
@@ -71,9 +71,9 @@ describe('zb.ui.DynamicList options', function() {
 			}).to.throw();
 		});
 
-		it('With options combination which causes recursion', function() {
-			expect(function() {
-				new DynamicList(function() {}, {
+		it('With options combination which causes recursion', () => {
+			expect(() => {
+				new DynamicList(() => {}, {
 					startFrom: 0,
 					startLoadingOnItemsLeft: 10,
 					frameSize: 10,

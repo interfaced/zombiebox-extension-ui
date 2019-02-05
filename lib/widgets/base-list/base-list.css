@@ -1,0 +1,18 @@
+.w-zbui-base-list {
+	overflow: hidden;
+}
+	.w-zbui-base-list__slider {
+		display: table;
+		position: relative;
+	}
+	.w-zbui-base-list .w-zbui-base-list-item {
+		display: table-cell;
+	}
+
+.w-zbui-base-list._is-vertical {}
+	.w-zbui-base-list._is-vertical .w-zbui-base-list__slider {
+		display: block;
+	}
+	.w-zbui-base-list._is-vertical .w-zbui-base-list-item {
+		display: block;
+	}

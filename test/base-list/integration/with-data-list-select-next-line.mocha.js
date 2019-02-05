@@ -1,18 +1,18 @@
-describe('zb.ui.BaseListDataList: select next line', function() {
-	var expect = chai.expect;
-	var given = mochaTestSteps.given;
-	var when = mochaTestSteps.when;
-	var then = mochaTestSteps.then;
+describe('zb.ui.widgets.BaseListDataList: select next line', () => {
+	const expect = chai.expect;
+	const given = mochaTestSteps.given;
+	const when = mochaTestSteps.when;
+	const then = mochaTestSteps.then;
 
-	var buffer, dataList, spyChange, spySelect;
-	var helper = zb.ui.test.baseListHelper;
+	let buffer;
+	let dataList;
+	let spyChange;
+	let spySelect;
+	const helper = zb.ui.test.baseListHelper;
 
-	beforeEach(function() {
-		var array = Array
-			.apply(null, new Array(94))
-			.map(function(item, index) {
-				return (index < 10 ? '0' : '') + index;
-			});
+	beforeEach(() => {
+		const array = Array(...new Array(94))
+			.map((item, index) => (index < 10 ? '0' : '') + index);
 		dataList = helper.createDataList(array);
 
 		buffer = helper.createBuffer({
@@ -24,7 +24,7 @@ describe('zb.ui.BaseListDataList: select next line', function() {
 		spyChange = sinon.spy(helper, 'changeCallback');
 		spySelect = sinon.spy(helper, 'selectCallback');
 	});
-	afterEach(function() {
+	afterEach(() => {
 		spyChange.restore();
 		spySelect.restore();
 	});
@@ -46,22 +46,20 @@ describe('zb.ui.BaseListDataList: select next line', function() {
 	// '84', '85', '86', '87', '88', '89',
 	// '90', '91', '92', '93'
 
-	it('Selecting 71-th item', function() {
+	it('Selecting 71-th item', () => {
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('select 71-th item', function() {
+		when('select 71-th item', () => {
 			dataList.selectAt(71);
 		});
 		// THEN
-		then('changeCallback is called once with new buffer contents', function() {
+		then('changeCallback is called once with new buffer contents', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([
@@ -78,21 +76,19 @@ describe('zb.ui.BaseListDataList: select next line', function() {
 		return then('done');
 	});
 
-	it('Selecting next lines after 71-th item', function() {
+	it('Selecting next lines after 71-th item', () => {
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					dataList.selectAt(71);
-				})
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				dataList.selectAt(71);
+			})
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('select next line five times', function() {
+		when('select next line five times', () => {
 			buffer.selectNextLine(); // 77-th item
 			buffer.selectNextLine(); // 83-th item
 			buffer.selectNextLine(); // 89-th item
@@ -100,7 +96,7 @@ describe('zb.ui.BaseListDataList: select next line', function() {
 			buffer.selectNextLine(); // 89-th item
 		});
 		// THEN
-		then('changeCallback is called once with new buffer contents', function() {
+		then('changeCallback is called once with new buffer contents', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([

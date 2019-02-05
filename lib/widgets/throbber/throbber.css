@@ -1,0 +1,7 @@
+.w-zbui-throbber {}
+
+.w-zbui-throbber._theme_default {
+	width: 88px;
+	height: 88px;
+	background-image: url(throbber.png);
+}

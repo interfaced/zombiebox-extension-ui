@@ -3,14 +3,10 @@ goog.provide('zb.ui.test.baseListHelper');
 
 // Common
 
-zb.ui.test.baseListHelper.changeCallback = function() {
-	return 'changeCallback';
-};
+zb.ui.test.baseListHelper.changeCallback = () => 'changeCallback';
 
 
-zb.ui.test.baseListHelper.selectCallback = function() {
-	return 'selectCallback';
-};
+zb.ui.test.baseListHelper.selectCallback = () => 'selectCallback';
 
 
 zb.ui.test.baseListHelper.defaultOptions = {
@@ -21,47 +17,43 @@ zb.ui.test.baseListHelper.defaultOptions = {
 
 
 /**
- * @param {Array.<string>} array
- * @return {zb.ui.DataList.<string>}
+ * @param {Array<string>} array
+ * @return {zb.ui.data.List<string>}
  */
-zb.ui.test.baseListHelper.createDataList = function(array) {
-	return new zb.ui.DataList(array);
-};
+zb.ui.test.baseListHelper.createDataList = (array) => new zb.ui.data.List(array);
 
 
 /**
- * @param {zb.ui.BaseListBuffer.Options=} opt_options
- * @return {zb.ui.BaseListBuffer}
+ * @param {zb.ui.widgets.BaseListBuffer.Options=} opt_options
+ * @return {zb.ui.widgets.BaseListBuffer}
  */
-zb.ui.test.baseListHelper.createBuffer = function(opt_options) {
-	var helper = zb.ui.test.baseListHelper;
+zb.ui.test.baseListHelper.createBuffer = (opt_options) => {
+	const helper = zb.ui.test.baseListHelper;
 
-	return new zb.ui.BaseListDataList(
+	return new zb.ui.widgets.BaseListDataList(
 		opt_options || helper.defaultOptions,
-		function() {
-			helper.changeCallback.apply(helper, arguments);
+		(...args) => {
+			helper.changeCallback(...args);
 		},
-		function() {
-			helper.selectCallback.apply(helper, arguments);
+		(...args) => {
+			helper.selectCallback(...args);
 		}
 	);
 };
 
 
 /**
- * @param {zb.ui.BaseListBuffer} buffer
- * @param {?zb.ui.DataList.<string>} source
- * @return {IThenable.<zb.ui.BaseListBuffer>}
+ * @param {zb.ui.widgets.BaseListBuffer} buffer
+ * @param {?zb.ui.data.List<string>} source
+ * @return {IThenable<zb.ui.widgets.BaseListBuffer>}
  */
-zb.ui.test.baseListHelper.setBufferSource = function(buffer, source) {
+zb.ui.test.baseListHelper.setBufferSource = (buffer, source) => {
 	buffer.setSource(source);
 
 	if (source) {
 		return source
 			.preload()
-			.then(function() {
-				return buffer;
-			});
+			.then(() => buffer);
 	} else {
 		return Promise.resolve(buffer);
 	}
@@ -70,102 +62,96 @@ zb.ui.test.baseListHelper.setBufferSource = function(buffer, source) {
 // Default
 
 /**
- * @return {Array.<string>}
+ * @return {Array<string>}
  */
-zb.ui.test.baseListHelper.createDefaultArray = function() {
-	return [
-		'A', 'B', 'C',
-		'D', 'E', 'F',
-		'G', 'H', 'I',
-		'J', 'K', 'L',
-		'M', 'N', 'O',
-		'P', 'Q', 'R',
-		'S', 'T', 'U',
-		'V', 'W', 'X',
-		'Y', 'Z'
-	];
-};
+zb.ui.test.baseListHelper.createDefaultArray = () => [
+	'A', 'B', 'C',
+	'D', 'E', 'F',
+	'G', 'H', 'I',
+	'J', 'K', 'L',
+	'M', 'N', 'O',
+	'P', 'Q', 'R',
+	'S', 'T', 'U',
+	'V', 'W', 'X',
+	'Y', 'Z'
+];
 
 
 /**
- * @return {zb.ui.DataList.<string>}
+ * @return {zb.ui.data.List<string>}
  */
-zb.ui.test.baseListHelper.createDefaultDataList = function() {
-	var array = zb.ui.test.baseListHelper.createDefaultArray();
+zb.ui.test.baseListHelper.createDefaultDataList = () => {
+	const array = zb.ui.test.baseListHelper.createDefaultArray();
 	return zb.ui.test.baseListHelper.createDataList(array);
 };
 
 
 /**
- * @return {IThenable.<zb.ui.BaseListBuffer>}
+ * @return {IThenable<zb.ui.widgets.BaseListBuffer>}
  */
-zb.ui.test.baseListHelper.createDefaultBuffer = function() {
-	var buffer = zb.ui.test.baseListHelper.createBuffer();
-	var dataList = zb.ui.test.baseListHelper.createDefaultDataList();
+zb.ui.test.baseListHelper.createDefaultBuffer = () => {
+	const buffer = zb.ui.test.baseListHelper.createBuffer();
+	const dataList = zb.ui.test.baseListHelper.createDefaultDataList();
 	return zb.ui.test.baseListHelper.setBufferSource(buffer, dataList);
 };
 
 // Other
 
 /**
- * @return {Array.<string>}
+ * @return {Array<string>}
  */
-zb.ui.test.baseListHelper.createOtherArray = function() {
-	return [
-		'alpha', 'beta', 'gamma',
-		'delta', 'epsilon', 'zeta',
-		'eta', 'theta', 'iota',
-		'kappa', 'lambda', 'mu',
-		'nu', 'omicron', 'pi',
-		'rho', 'sigma', 'tau',
-		'upsilon', 'phi', 'chi',
-		'psi', 'omega'
-	];
-};
+zb.ui.test.baseListHelper.createOtherArray = () => [
+	'alpha', 'beta', 'gamma',
+	'delta', 'epsilon', 'zeta',
+	'eta', 'theta', 'iota',
+	'kappa', 'lambda', 'mu',
+	'nu', 'omicron', 'pi',
+	'rho', 'sigma', 'tau',
+	'upsilon', 'phi', 'chi',
+	'psi', 'omega'
+];
 
 
 /**
- * @return {zb.ui.DataList.<string>}
+ * @return {zb.ui.data.List<string>}
  */
-zb.ui.test.baseListHelper.createOtherDataList = function() {
-	var array = zb.ui.test.baseListHelper.createOtherArray();
+zb.ui.test.baseListHelper.createOtherDataList = () => {
+	const array = zb.ui.test.baseListHelper.createOtherArray();
 	return zb.ui.test.baseListHelper.createDataList(array);
 };
 
 
 /**
- * @return {IThenable.<zb.ui.BaseListBuffer>}
+ * @return {IThenable<zb.ui.widgets.BaseListBuffer>}
  */
-zb.ui.test.baseListHelper.createOtherBuffer = function() {
-	var buffer = zb.ui.test.baseListHelper.createBuffer();
-	var dataList = zb.ui.test.baseListHelper.createOtherDataList();
+zb.ui.test.baseListHelper.createOtherBuffer = () => {
+	const buffer = zb.ui.test.baseListHelper.createBuffer();
+	const dataList = zb.ui.test.baseListHelper.createOtherDataList();
 	return zb.ui.test.baseListHelper.setBufferSource(buffer, dataList);
 };
 
 // Empty
 
 /**
- * @return {Array.<string>}
+ * @return {Array<string>}
  */
-zb.ui.test.baseListHelper.createEmptyArray = function() {
-	return [];
-};
+zb.ui.test.baseListHelper.createEmptyArray = () => [];
 
 
 /**
- * @return {zb.ui.DataList.<string>}
+ * @return {zb.ui.data.List<string>}
  */
-zb.ui.test.baseListHelper.createEmptyDataList = function() {
-	var array = zb.ui.test.baseListHelper.createEmptyArray();
+zb.ui.test.baseListHelper.createEmptyDataList = () => {
+	const array = zb.ui.test.baseListHelper.createEmptyArray();
 	return zb.ui.test.baseListHelper.createDataList(array);
 };
 
 
 /**
- * @return {IThenable.<zb.ui.BaseListBuffer>}
+ * @return {IThenable<zb.ui.widgets.BaseListBuffer>}
  */
-zb.ui.test.baseListHelper.createEmptyBuffer = function() {
-	var buffer = zb.ui.test.baseListHelper.createBuffer();
-	var dataList = zb.ui.test.baseListHelper.createEmptyDataList();
+zb.ui.test.baseListHelper.createEmptyBuffer = () => {
+	const buffer = zb.ui.test.baseListHelper.createBuffer();
+	const dataList = zb.ui.test.baseListHelper.createEmptyDataList();
 	return zb.ui.test.baseListHelper.setBufferSource(buffer, dataList);
 };

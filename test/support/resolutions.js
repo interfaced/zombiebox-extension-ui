@@ -25,7 +25,7 @@ zb.device.ResolutionInfoItem;
 
 
 /**
- * @type {Object.<zb.device.Resolution,zb.device.ResolutionInfoItem>}
+ * @type {Object<zb.device.Resolution, zb.device.ResolutionInfoItem>}
  */
 zb.device.ResolutionInfo = {};
 

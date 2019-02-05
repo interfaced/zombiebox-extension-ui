@@ -1,42 +1,42 @@
-describe('zb.ui.Throbber', function() {
-	var expect = chai.expect;
-	var given = mochaTestSteps.given;
-	var when = mochaTestSteps.when;
-	var then = mochaTestSteps.then;
+describe('zb.ui.widgets.Throbber', () => {
+	const expect = chai.expect;
+	const given = mochaTestSteps.given;
+	const when = mochaTestSteps.when;
+	const then = mochaTestSteps.then;
 
-	var Throbber = zb.ui.Throbber;
+	const Throbber = zb.ui.widgets.Throbber;
 
-	describe('Class', function() {
-		it('class: zb.ui.Throbber', function() {
+	describe('Class', () => {
+		it('class: zb.ui.widgets.Throbber', () => {
 			expect(Throbber).is.a('function');
 		});
-		it('constructor: default', function() {
-			expect(function() {
-				new Throbber;
+		it('constructor: default', () => {
+			expect(() => {
+				new Throbber();
 			}).not.to.throw();
 		});
 	});
 
-	describe('Arguments', function() {
-		it('No arguments', function() {
-			var throbber = new Throbber;
+	describe('Arguments', () => {
+		it('No arguments', () => {
+			const throbber = new Throbber();
 
 			expect(throbber._container).instanceOf(HTMLElement);
 			expect(throbber._step).equal(throbber.STEP);
 			expect(throbber._width).equal(throbber.WIDTH);
 			expect(throbber._stepInterval).equal(throbber.STEP_INTERVAL);
 		});
-		it('Only container argument', function() {
-			var container = document.createElement('div');
-			var throbber = new Throbber(container);
+		it('Only container argument', () => {
+			const container = document.createElement('div');
+			const throbber = new Throbber(container);
 
 			expect(throbber._container).equal(container);
 			expect(throbber._step).equal(throbber.STEP);
 			expect(throbber._width).equal(throbber.WIDTH);
 			expect(throbber._stepInterval).equal(throbber.STEP_INTERVAL);
 		});
-		it('Only params argument', function() {
-			var throbber = new Throbber({
+		it('Only params argument', () => {
+			const throbber = new Throbber({
 				step: 100,
 				width: 200,
 				stepInterval: 300
@@ -47,8 +47,8 @@ describe('zb.ui.Throbber', function() {
 			expect(throbber._width).equal(200);
 			expect(throbber._stepInterval).equal(300);
 		});
-		it('Only params argument with undefined container', function() {
-			var throbber = new Throbber(undefined, {
+		it('Only params argument with undefined container', () => {
+			const throbber = new Throbber(undefined, {
 				step: 100,
 				width: 200,
 				stepInterval: 300
@@ -59,9 +59,9 @@ describe('zb.ui.Throbber', function() {
 			expect(throbber._width).equal(200);
 			expect(throbber._stepInterval).equal(300);
 		});
-		it('Both arguments', function() {
-			var container = document.createElement('div');
-			var throbber = new Throbber(container, {
+		it('Both arguments', () => {
+			const container = document.createElement('div');
+			const throbber = new Throbber(container, {
 				step: 100,
 				width: 200,
 				stepInterval: 300
@@ -74,92 +74,90 @@ describe('zb.ui.Throbber', function() {
 		});
 	});
 
-	describe('Public methods', function() {
-		it('wait', function() {
-			var throbber = new Throbber;
+	describe('Public methods', () => {
+		it('wait', () => {
+			const throbber = new Throbber();
 			expect(throbber.wait).is.a('function');
 		});
 	});
 
 	describe('Events', function() {
-		var throbber;
-		var callbacks = {
-			EVENT_START: function() {},
-			EVENT_STOP: function() {}
+		let throbber;
+		const callbacks = {
+			EVENT_START() {},
+			EVENT_STOP() {}
 		};
-		var eventStart = sinon.spy(callbacks, 'EVENT_START');
-		var eventStop = sinon.spy(callbacks, 'EVENT_STOP');
+		const eventStart = sinon.spy(callbacks, 'EVENT_START');
+		const eventStop = sinon.spy(callbacks, 'EVENT_STOP');
 
-		beforeEach(function() {
-			throbber = new Throbber;
+		beforeEach(() => {
+			throbber = new Throbber();
 		});
 
-		afterEach(function() {
+		afterEach(() => {
 			throbber = null;
 
-			eventStart.reset();
-			eventStop.reset();
+			eventStart.resetHistory();
+			eventStop.resetHistory();
 		});
 
-		it('Inherits from zb.events.EventPublisher', function() {
+		it('Inherits from zb.events.EventPublisher', () => {
 			expect(throbber).instanceOf(zb.events.EventPublisher);
 		});
 
-		it('Have events: start, stop', function() {
+		it('Have events: start, stop', () => {
 			expect(throbber.EVENT_START).is.a('string');
 			expect(throbber.EVENT_STOP).is.a('string');
 		});
 
-		var createDelayedPromise = function() {
-			return new Promise(function(resolve) {
-				setTimeout(resolve.bind(null), zb.stub.number(0, 2000));
-			});
-		};
+		const createDelayedPromise = () => new Promise((resolve) => {
+			setTimeout(resolve.bind(null), zb.stub.number(0, 2000));
+		});
 
 		this.timeout(5000);
 
-		it('Events fired for single promise', function() {
-			given('added handlers for events', function() {
+		it('Events fired for single promise', () => {
+			given('added handlers for events', () => {
 				throbber.on(throbber.EVENT_START, eventStart);
 				throbber.on(throbber.EVENT_STOP, eventStop);
 			});
 
-			when('set promise', function() {
-				var promise = createDelayedPromise();
+			when('set promise', () => {
+				const promise = createDelayedPromise();
 				throbber.wait(promise);
 				return promise;
 			});
 
-			then('EVENT_START called once', function() {
+			then('EVENT_START called once', () => {
 				expect(eventStart).callCount(1);
 			});
 
-			then('EVENT_STOP called once', function() {
+			then('EVENT_STOP called once', () => {
 				expect(eventStop).callCount(1);
 			});
 
 			return then('done');
 		});
 
-		it('Events fired for miltiple promises', function() {
-			given('added handlers for events', function() {
+		it('Events fired for miltiple promises', () => {
+			given('added handlers for events', () => {
 				throbber.on(throbber.EVENT_START, eventStart);
 				throbber.on(throbber.EVENT_STOP, eventStop);
 			});
 
-			when('set promise', function() {
-				var promise1 = createDelayedPromise();
-				var promise2 = createDelayedPromise();
+			when('set promise', () => {
+				const promise1 = createDelayedPromise();
+				const promise2 = createDelayedPromise();
 				throbber.wait(promise1);
 				throbber.wait(promise2);
 				return Promise.all([promise1, promise2]);
 			});
 
-			then('EVENT_START called once', function() {
+			then('EVENT_START called once', () => {
 				expect(eventStart).callCount(1);
 			});
 
-			then('EVENT_STOP called once', function() {
+			then('EVENT_STOP called once', () => {
 				expect(eventStop).callCount(1);
 			});
 

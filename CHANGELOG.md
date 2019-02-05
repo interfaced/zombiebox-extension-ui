@@ -1,6 +1,23 @@
 История изменений
 -----------------------
 
+## Версия 1.0.0
+
+* Исправлен код-стайл в соответствии с `eslint-config-interfaced` версии 1.2.0;
+* Исправлен код-стайл в соответствии с `stylelint-config-interfaced` версии 0.1.0;
+* Код тестов переведен на ES6;
+* Удалены файлы относящиеся к Google analytics `lib/analytics.js` и `zb.ui.GoogleAnalytics`;
+* Виджеты перенесены неймспейс и папку `widgets`;
+* Сущности `zb.ui.DataList`, `zb.ui.DynamicList`, `zb.ui.CyclicalDataList`, `zb.ui.IDataList` перенесены
+  в неймспейс и папку `data`;
+* В виджете `zb.ui.widgets.ExtendedList` добавлена возможность отключать полосу прокрутки и стрелки;
+* В виджете `zb.ui.widgets.AbstractKeyboard` добавлен базовый набор действий;
+* Попап `zb.ui.popups.Base` переименован в `zb.ui.popups.AbstractBase`, так же у него удалено событие `EVENT_CLOSE`;
+* Объект `zb.ui.widgets.DivInput.AnimationPropertyNames` переименован в `zb.ui.widgets.DivInput.AnimationPropertyName`;
+* Исправлена работа `zb.ui.widgets.ScrollText` без передачи `zb.ui.widgets.ScrollBar`,
+  а так же добавлено `README.md` с описанием и примером использования;
+* Исправлена ошибка, когда `zb.ui.widgets.Throbber` не сбрасывал состояние при новом старте.
+
 ## Версия 0.5.3
 
 * Добавлена обработка неверных значений настроек `zb.ui.DynamicList`;

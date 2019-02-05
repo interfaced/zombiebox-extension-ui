@@ -1,6 +1,6 @@
 # zombiebox-extension-ui
 
-UI-components library for [Zombiebox](http://zombiebox.tv) framework.
+UI-components library for [ZombieBox](http://zombiebox.tv) framework.
 
 Installation
 -----

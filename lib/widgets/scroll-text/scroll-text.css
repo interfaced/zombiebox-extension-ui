@@ -1,0 +1,13 @@
+.w-zbui-scroll-text {
+	overflow: hidden;
+	position: relative;
+}
+	.w-zbui-scroll-text__slider {
+		position: relative;
+	}
+	.w-zbui-scroll-text .w-zbui-scroll-bar {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+	}

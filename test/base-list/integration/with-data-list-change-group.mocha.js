@@ -1,87 +1,79 @@
-describe('zb.ui.BaseListDataList: change group of items', function() {
-	var expect = chai.expect;
-	var given = mochaTestSteps.given;
-	var when = mochaTestSteps.when;
-	var then = mochaTestSteps.then;
+describe('zb.ui.widgets.BaseListDataList: change group of items', () => {
+	const expect = chai.expect;
+	const given = mochaTestSteps.given;
+	const when = mochaTestSteps.when;
+	const then = mochaTestSteps.then;
 
-	var buffer, spyChange, spySelect;
-	var helper = zb.ui.test.baseListHelper;
+	let buffer;
+	let spyChange;
+	let spySelect;
+	const helper = zb.ui.test.baseListHelper;
 
-	beforeEach(function() {
+	beforeEach(() => {
 		buffer = helper.createBuffer();
 
 		spyChange = sinon.spy(helper, 'changeCallback');
 		spySelect = sinon.spy(helper, 'selectCallback');
 	});
 
-	afterEach(function() {
+	afterEach(() => {
 		spyChange.restore();
 		spySelect.restore();
 	});
 
-	it('Setting empty DataList', function() {
-		var dataList = helper.createEmptyDataList();
+	it('Setting empty zb.ui.data.List', () => {
+		const dataList = helper.createEmptyDataList();
 
 		// GIVEN
-		given('created empty baselist-datalist', function() {
-			return helper.setBufferSource(buffer, dataList);
-		});
+		given('created empty baselist-datalist', () => helper.setBufferSource(buffer, dataList));
 		// THEN
-		then('changeCallback not called', function() {
+		then('changeCallback not called', () => {
 			expect(spyChange).callCount(0);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Re-setting empty Array', function() {
-		var dataList = helper.createEmptyDataList();
+	it('Re-setting empty Array', () => {
+		const dataList = helper.createEmptyDataList();
 
 		// GIVEN
-		given('created empty baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created empty baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set empty array of items', function() {
-			return dataList.setItems(helper.createEmptyArray());
-		});
+		when('set empty array of items', () => dataList.setItems(helper.createEmptyArray()));
 		// THEN
-		then('changeCallback not called', function() {
+		then('changeCallback not called', () => {
 			expect(spyChange).callCount(0);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Setting items to DataList with setItems method', function() {
-		var dataList = helper.createEmptyDataList();
+	it('Setting items to zb.ui.data.List with setItems method', () => {
+		const dataList = helper.createEmptyDataList();
 
 		// GIVEN
-		given('created empty baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created empty baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			return dataList.setItems(helper.createDefaultArray());
-		});
+		when('set array of items', () => dataList.setItems(helper.createDefaultArray()));
 		// THEN
-		then('changeCallback called once with corresponding set', function() {
+		then('changeCallback called once with corresponding set', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([
@@ -90,7 +82,7 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 					'G', 'H', 'I'
 				]);
 		});
-		then('selectCallback called once with first item', function() {
+		then('selectCallback called once with first item', () => {
 			expect(spySelect)
 				.callCount(1)
 				.calledWith('A', 0, null, NaN);
@@ -99,30 +91,26 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 		return then('done');
 	});
 
-	it('Clearing not empty DataList', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Clearing not empty zb.ui.data.List', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			return dataList.clear();
-		});
+		when('set array of items', () => dataList.clear());
 		// THEN
-		then('changeCallback called once with corresponding set', function() {
+		then('changeCallback called once with corresponding set', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([]);
 		});
-		then('selectCallback called once with null item', function() {
-			// Из-за особенностей DataList.clear(), будет вызываться selectCallback.
+		then('selectCallback called once with null item', () => {
+			// Из-за особенностей zb.ui.data.List.clear(), будет вызываться selectCallback.
 			// Не сильно критично, но по логике этот вызов не нужен.
 			expect(spySelect)
 				.callCount(1)
@@ -132,108 +120,98 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 		return then('done');
 	});
 
-	it('Clearing empty DataList', function() {
-		var dataList = helper.createEmptyDataList();
+	it('Clearing empty zb.ui.data.List', () => {
+		const dataList = helper.createEmptyDataList();
 
 		// GIVEN
-		given('created empty baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created empty baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			return dataList.clear();
-		});
+		when('set array of items', () => dataList.clear());
 		// THEN
-		then('changeCallback not called', function() {
+		then('changeCallback not called', () => {
 			expect(spyChange).callCount(0);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding empty array to empty DataList', function() {
-		var dataList = helper.createEmptyDataList();
+	it('Adding empty array to empty zb.ui.data.List', () => {
+		const dataList = helper.createEmptyDataList();
 
 		// GIVEN
-		given('created empty baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created empty baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createEmptyArray();
+		when('set array of items', () => {
+			const array = helper.createEmptyArray();
 			return dataList.addItems(array);
 		});
 		// THEN
-		then('changeCallback not called', function() {
+		then('changeCallback not called', () => {
 			expect(spyChange).callCount(0);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding empty array to filled DataList', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Adding empty array to filled zb.ui.data.List', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createEmptyArray();
+		when('set array of items', () => {
+			const array = helper.createEmptyArray();
 			return dataList.addItems(array);
 		});
 		// THEN
-		then('changeCallback not called', function() {
+		then('changeCallback not called', () => {
 			expect(spyChange).callCount(0);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding filled array to empty DataList', function() {
-		var dataList = helper.createEmptyDataList();
+	it('Adding filled array to empty zb.ui.data.List', () => {
+		const dataList = helper.createEmptyDataList();
 
 		// GIVEN
-		given('created empty baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created empty baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createDefaultArray();
+		when('set array of items', () => {
+			const array = helper.createDefaultArray();
 			return dataList.addItems(array);
 		});
 		// THEN
-		then('changeCallback called once with corresponding set', function() {
+		then('changeCallback called once with corresponding set', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([
@@ -242,7 +220,7 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 					'G', 'H', 'I'
 				]);
 		});
-		then('selectCallback called once with A item', function() {
+		then('selectCallback called once with A item', () => {
 			expect(spySelect)
 				.callCount(1)
 				.calledWith('A', 0, null, NaN);
@@ -251,85 +229,79 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 		return then('done');
 	});
 
-	it('Adding filled array to filled DataList', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Adding filled array to filled zb.ui.data.List', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createOtherArray();
+		when('set array of items', () => {
+			const array = helper.createOtherArray();
 			return dataList.addItems(array);
 		});
 		// THEN
-		then('changeCallback not called', function() {
+		then('changeCallback not called', () => {
 			expect(spyChange).callCount(0);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding array before buffer without line shifting', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Adding array before buffer without line shifting', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					dataList.select('K');
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				dataList.select('K');
 
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createOtherArray().slice(0, 3);
+		when('set array of items', () => {
+			const array = helper.createOtherArray().slice(0, 3);
 			return dataList.addItemsAt(array, 0);
 		});
 		// THEN
-		then('changeCallback not called', function() {
+		then('changeCallback not called', () => {
 			expect(spyChange).callCount(0);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding array before buffer with line shifting', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Adding array before buffer with line shifting', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					dataList.select('K');
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				dataList.select('K');
 
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createOtherArray().slice(0, 2);
+		when('set array of items', () => {
+			const array = helper.createOtherArray().slice(0, 2);
 			return dataList.addItemsAt(array, 0);
 		});
 		// THEN
-		then('changeCallback called once with corresponding set', function() {
+		then('changeCallback called once with corresponding set', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([
@@ -340,60 +312,56 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 					'Q', 'R', 'S'
 				]);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding array after buffer', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Adding array after buffer', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createOtherArray().slice(0, 3);
+		when('set array of items', () => {
+			const array = helper.createOtherArray().slice(0, 3);
 			return dataList.addItemsAt(array, dataList.size());
 		});
 		// THEN
-		then('changeCallback not called', function() {
+		then('changeCallback not called', () => {
 			expect(spyChange).callCount(0);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding array in buffer before selected element without line shifting', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Adding array in buffer before selected element without line shifting', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createOtherArray().slice(0, 3);
+		when('set array of items', () => {
+			const array = helper.createOtherArray().slice(0, 3);
 			return dataList.addItemsAt(array, 0);
 		});
 		// THEN
-		then('changeCallback called once with corresponding set', function() {
+		then('changeCallback called once with corresponding set', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([
@@ -403,32 +371,30 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 					'G', 'H', 'I'
 				]);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding double array in buffer before selected element without line shifting', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Adding double array in buffer before selected element without line shifting', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createOtherArray().slice(0, 6);
+		when('set array of items', () => {
+			const array = helper.createOtherArray().slice(0, 6);
 			return dataList.addItemsAt(array, 0);
 		});
 		// THEN
-		then('changeCallback called once with corresponding set', function() {
+		then('changeCallback called once with corresponding set', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([
@@ -439,32 +405,30 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 					'G', 'H', 'I'
 				]);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding array in buffer before selected element with line shifting', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Adding array in buffer before selected element with line shifting', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createOtherArray().slice(0, 2);
+		when('set array of items', () => {
+			const array = helper.createOtherArray().slice(0, 2);
 			return dataList.addItemsAt(array, 0);
 		});
 		// THEN
-		then('changeCallback called once with corresponding set', function() {
+		then('changeCallback called once with corresponding set', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([
@@ -473,32 +437,30 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 					'E', 'F', 'G'
 				]);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE
 		return then('done');
 	});
 
-	it('Adding array in buffer after selected element', function() {
-		var dataList = helper.createDefaultDataList();
+	it('Adding array in buffer after selected element', () => {
+		const dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return helper
-				.setBufferSource(buffer, dataList)
-				.then(function() {
-					spyChange.reset();
-					spySelect.reset();
-				});
-		});
+		given('created baselist-datalist', () => helper
+			.setBufferSource(buffer, dataList)
+			.then(() => {
+				spyChange.resetHistory();
+				spySelect.resetHistory();
+			}));
 		// WHEN
-		when('set array of items', function() {
-			var array = helper.createOtherArray().slice(0, 3);
+		when('set array of items', () => {
+			const array = helper.createOtherArray().slice(0, 3);
 			return dataList.addItemsAt(array, 1);
 		});
 		// THEN
-		then('changeCallback called once with corresponding set', function() {
+		then('changeCallback called once with corresponding set', () => {
 			expect(spyChange)
 				.callCount(1)
 				.calledWith([
@@ -507,7 +469,7 @@ describe('zb.ui.BaseListDataList: change group of items', function() {
 					'D', 'E', 'F'
 				]);
 		});
-		then('selectCallback not called', function() {
+		then('selectCallback not called', () => {
 			expect(spySelect).callCount(0);
 		});
 		// DONE

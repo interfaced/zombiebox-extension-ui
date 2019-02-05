@@ -1,0 +1,16 @@
+.w-zbui-scroll-list {}
+	.w-zbui-scroll-list .w-zbui-base-list__wrap {
+		position: relative;
+	}
+	.w-zbui-scroll-list .w-zbui-scroll-bar {
+		position: absolute;
+		right: 1px;
+		bottom: 1px;
+		left: 1px;
+	}
+
+.w-zbui-scroll-list._is-vertical {}
+	.w-zbui-scroll-list._is-vertical .w-zbui-scroll-bar {
+		top: 1px;
+		left: auto;
+	}
