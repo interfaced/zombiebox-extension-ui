@@ -17,11 +17,21 @@ zb.ui.test.support.Helper.defaultOptions = {
 	loadOnLeft: 1
 };
 
+/**
+ * @param {Array.<string>} array
+ * @return {zb.ui.DataList.<string>}
+ */
 zb.ui.test.support.Helper.createDataList = function(array) {
 	return new zb.ui.DataList(array);
 };
 
-zb.ui.test.support.Helper.createBuffer = function(dataList) {
+
+/**
+ * @param {zb.ui.DataList.<string>} dataList
+ * @param {zb.ui.BaseListBuffer.Options=} opt_options
+ * @return {IThenable.<zb.ui.BaseListBuffer>}
+ */
+zb.ui.test.support.Helper.createBuffer = function(dataList, opt_options) {
 	var helper = zb.ui.test.support.Helper;
 	var buffer = new zb.ui.BaseListDataList(function() {
 		helper.changeCallback.apply(helper, arguments);
@@ -29,13 +39,20 @@ zb.ui.test.support.Helper.createBuffer = function(dataList) {
 		helper.selectCallback.apply(helper, arguments);
 	});
 
-	buffer.setSource(dataList, helper.defaultOptions);
+	buffer.setSource(dataList, opt_options || helper.defaultOptions);
 
-	return dataList.preload();
+	return dataList
+		.preload()
+		.then(function() {
+			return buffer;
+		});
 };
 
 // Default
 
+/**
+ * @return {Array.<string>}
+ */
 zb.ui.test.support.Helper.createDefaultArray = function() {
 	return [
 		'A', 'B', 'C',
@@ -50,11 +67,19 @@ zb.ui.test.support.Helper.createDefaultArray = function() {
 	];
 };
 
+
+/**
+ * @return {zb.ui.DataList.<string>}
+ */
 zb.ui.test.support.Helper.createDefaultDataList = function() {
 	var array = zb.ui.test.support.Helper.createDefaultArray();
 	return zb.ui.test.support.Helper.createDataList(array);
 };
 
+
+/**
+ * @return {IThenable.<zb.ui.BaseListBuffer>}
+ */
 zb.ui.test.support.Helper.createDefaultBuffer = function() {
 	var dataList = zb.ui.test.support.Helper.createDefaultDataList();
 	return zb.ui.test.support.Helper.createBuffer(dataList);
@@ -62,6 +87,9 @@ zb.ui.test.support.Helper.createDefaultBuffer = function() {
 
 // Other
 
+/**
+ * @return {Array.<string>}
+ */
 zb.ui.test.support.Helper.createOtherArray = function() {
 	return [
 		'alpha', 'beta', 'gamma',
@@ -75,11 +103,19 @@ zb.ui.test.support.Helper.createOtherArray = function() {
 	];
 };
 
+
+/**
+ * @return {zb.ui.DataList.<string>}
+ */
 zb.ui.test.support.Helper.createOtherDataList = function() {
 	var array = zb.ui.test.support.Helper.createOtherArray();
 	return zb.ui.test.support.Helper.createDataList(array);
 };
 
+
+/**
+ * @return {IThenable.<zb.ui.BaseListBuffer>}
+ */
 zb.ui.test.support.Helper.createOtherBuffer = function() {
 	var dataList = zb.ui.test.support.Helper.createOtherDataList();
 	return zb.ui.test.support.Helper.createBuffer(dataList);
@@ -87,15 +123,26 @@ zb.ui.test.support.Helper.createOtherBuffer = function() {
 
 // Empty
 
+/**
+ * @return {Array.<string>}
+ */
 zb.ui.test.support.Helper.createEmptyArray = function() {
 	return [];
 };
 
+
+/**
+ * @return {zb.ui.DataList.<string>}
+ */
 zb.ui.test.support.Helper.createEmptyDataList = function() {
 	var array = zb.ui.test.support.Helper.createEmptyArray();
 	return zb.ui.test.support.Helper.createDataList(array);
 };
 
+
+/**
+ * @return {IThenable.<zb.ui.BaseListBuffer>}
+ */
 zb.ui.test.support.Helper.createEmptyBuffer = function() {
 	var dataList = zb.ui.test.support.Helper.createEmptyDataList();
 	return zb.ui.test.support.Helper.createBuffer(dataList);
