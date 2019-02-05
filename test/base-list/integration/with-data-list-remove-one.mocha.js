@@ -4,54 +4,63 @@ describe('zb.ui.BaseListDataList: remove one item', function() {
 	var when = mochaTestSteps.when;
 	var then = mochaTestSteps.then;
 
-	var w = new zb.ui.test.support.World();
-	mochaTestSteps.world(w);
+	var dataList, buffer, bufferPromise, spyChange, spySelect;
+	var helper = zb.ui.test.baseListHelper;
 
 	beforeEach(function() {
-		w.setup.datalist = w.setup.createDataList();
-		w.po.spyChange = sinon.spy(w.setup, 'changeCallback');
-		w.po.spySelected = sinon.spy(w.setup, 'selectCallback');
+		spyChange = sinon.spy(helper, 'changeCallback');
+		spySelect = sinon.spy(helper, 'selectCallback');
+
+		// GIVEN
+		given('created baselist-datalist with source', function() {
+			buffer = helper.createBuffer({
+				padding: 1,
+				lineSize: 3,
+				loadOnLeft: 1
+			});
+			dataList = helper.createDefaultDataList();
+			bufferPromise = helper
+				.setBufferSource(buffer, dataList)
+				.then(function() {
+					spyChange.reset();
+					spySelect.reset();
+				});
+
+			return bufferPromise;
+		});
 	});
 
 	afterEach(function() {
-		w.po.spyChange.restore();
-		w.po.spySelected.restore();
+		spyChange.restore();
+		spySelect.restore();
 	});
 
 	it('Check size on element removing', function() {
-		// GIVEN
-		given('created baselist-datalist with source', function() {
-			return w.createListWithSetupSource();
-		});
 		// WHEN
 		when('remove first element', function() {
-			w.setup.datalist.removeAt(0);
+			dataList.removeAt(0);
 		});
 		// THEN
 		then('size should decreased by one', function() {
-			expect(w.sut.list.getGlobalSize()).eql(25);
-			expect(w.sut.list.getSourceSize()).eql(25);
-			expect(w.sut.list.getLocalSize()).eql(6);
+			expect(buffer.getGlobalSize()).eql(25);
+			expect(buffer.getSourceSize()).eql(25);
+			expect(buffer.getLocalSize()).eql(6);
 		});
 		// DONE
 		return then('done');
 	});
 
 	it('Remove selected element', function() {
-		// GIVEN
-		given('created baselist-datalist with source', function() {
-			return w.createListWithSetupSource();
-		});
 		// WHEN
 		when('remove first element', function() {
-			w.setup.datalist.removeAt(0);
+			dataList.removeAt(0);
 		});
 		// THEN
 		then('items should be updated before select', function() {
-			expect(w.po.spyChange).calledBefore(w.po.spySelected);
+			expect(spyChange).calledBefore(spySelect);
 		});
-		then('changedCallback should be called', function() {
-			expect(w.po.spyChange)
+		then('changeCallback should be called', function() {
+			expect(spyChange)
 				.callCount(1)
 				.calledWith([
 					'B', 'C', 'D',
@@ -59,7 +68,7 @@ describe('zb.ui.BaseListDataList: remove one item', function() {
 				]);
 		});
 		then('selectCallback should be called with next element on same index', function() {
-			expect(w.po.spySelected)
+			expect(spySelect)
 				.callCount(1)
 				.calledWith('B', 0, null, NaN);
 		});
@@ -68,17 +77,13 @@ describe('zb.ui.BaseListDataList: remove one item', function() {
 	});
 
 	it('Remove not selected element', function() {
-		// GIVEN
-		given('created baselist-datalist with source', function() {
-			return w.createListWithSetupSource();
-		});
 		// WHEN
 		when('remove first element', function() {
-			w.setup.datalist.removeAt(1);
+			dataList.removeAt(1);
 		});
 		// THEN
-		then('changedCallback should be called', function() {
-			expect(w.po.spyChange)
+		then('changeCallback should be called', function() {
+			expect(spyChange)
 				.callCount(1)
 				.calledWith([
 					'A', 'C', 'D',
@@ -86,7 +91,7 @@ describe('zb.ui.BaseListDataList: remove one item', function() {
 				]);
 		});
 		then('selectCallback should not be called', function() {
-			expect(w.po.spySelected)
+			expect(spySelect)
 				.callCount(0);
 		});
 		// DONE
@@ -94,21 +99,17 @@ describe('zb.ui.BaseListDataList: remove one item', function() {
 	});
 
 	it('Remove element out of buffer', function() {
-		// GIVEN
-		given('created baselist-datalist with source', function() {
-			return w.createListWithSetupSource();
-		});
 		// WHEN
 		when('remove first element', function() {
-			w.setup.datalist.removeAt(6);
+			dataList.removeAt(6);
 		});
 		// THEN
-		then('changedCallback should not be called', function() {
-			expect(w.po.spyChange)
+		then('changeCallback should not be called', function() {
+			expect(spyChange)
 				.callCount(0);
 		});
 		then('selectCallback should not be called', function() {
-			expect(w.po.spySelected)
+			expect(spySelect)
 				.callCount(0);
 		});
 		// DONE

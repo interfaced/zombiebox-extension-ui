@@ -1,0 +1,37 @@
+/* ExtendedList widget
+*******************************/
+
+.w-extended-list {}
+	.w-extended-list .w-base-list__wrap {
+		position: relative;
+	}
+	.w-extended-list .w-scroll-bar {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+	.w-extended-list__arrow._up,
+	.w-extended-list__arrow._down {
+		display: none;
+	}
+	.w-extended-list__arrow._disabled {
+		display: none;
+	}
+
+.w-extended-list._is-vertical {}
+	.w-extended-list._is-vertical .w-scroll-bar {
+		top: 0;
+		left: auto;
+	}
+	.w-extended-list._is-vertical .w-extended-list__arrow._left,
+	.w-extended-list._is-vertical .w-extended-list__arrow._right {
+		display: none;
+	}
+	.w-extended-list._is-vertical .w-extended-list__arrow._up,
+	.w-extended-list._is-vertical .w-extended-list__arrow._down {
+		display: block;
+	}
+	.w-extended-list._is-vertical .w-extended-list__arrow._disabled {
+		display: none;
+	}

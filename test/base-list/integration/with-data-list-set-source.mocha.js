@@ -4,33 +4,40 @@ describe('zb.ui.BaseListDataList: set source', function() {
 	var when = mochaTestSteps.when;
 	var then = mochaTestSteps.then;
 
-	var w = new zb.ui.test.support.World();
-	var helper = zb.ui.test.support.Helper;
-	mochaTestSteps.world(w);
+	var buffer, spyChange, spySelect;
+	var helper = zb.ui.test.baseListHelper;
 
 	beforeEach(function() {
-		w.setup.datalist = w.setup.createDataList();
-		w.po.spyChange = sinon.spy(w.setup, 'changeCallback');
-		w.po.spySelected = sinon.spy(w.setup, 'selectCallback');
-	});
+		buffer = helper.createBuffer({
+			padding: 1,
+			lineSize: 3,
+			loadOnLeft: 1
+		});
 
+		spyChange = sinon.spy(helper, 'changeCallback');
+		spySelect = sinon.spy(helper, 'selectCallback');
+	});
 	afterEach(function() {
-		w.po.spyChange.restore();
-		w.po.spySelected.restore();
+		spyChange.restore();
+		spySelect.restore();
 	});
 
 	it('Setting empty DataList', function() {
 		// GIVEN
-		given('created empty baselist-datalist', function() {
+		given('empty given to fix mocha-test-steps bug', function() {});
+		// WHEN
+		when('set empty data-list', function() {
 			var dataList = helper.createEmptyDataList();
-			return w.createListWithSource(dataList);
+			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('changedCallback not called', function() {
-			expect(w.po.spyChange).callCount(0);
+		then('changeCallback not called', function() {
+			expect(spyChange)
+				.callCount(0);
 		});
-		then('selectedCallback not called', function() {
-			expect(w.po.spySelected).callCount(0);
+		then('selectCallback not called', function() {
+			expect(spySelect)
+				.callCount(0);
 		});
 		// DONE
 		return then('done');
@@ -38,29 +45,23 @@ describe('zb.ui.BaseListDataList: set source', function() {
 
 	it('Setting not empty DataList', function() {
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return w.createList();
-		});
+		given('empty given to fix mocha-test-steps bug', function() {});
 		// WHEN
-		when('set source', function() {
+		when('set default data-list', function() {
 			var dataList = helper.createDefaultDataList();
-			return w.doSetSource(dataList, {
-				padding: 1,
-				lineSize: 3,
-				loadOnLeft: 1
-			});
+			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('changedCallback called once with corresponding set', function() {
-			expect(w.po.spyChange)
+		then('changeCallback called once with corresponding set', function() {
+			expect(spyChange)
 				.callCount(1)
 				.calledWith([
 					'A', 'B', 'C',
 					'D', 'E', 'F'
 				]);
 		});
-		then('selectedCallback called once with first item', function() {
-			expect(w.po.spySelected)
+		then('selectCallback called once with first item', function() {
+			expect(spySelect)
 				.callCount(1)
 				.calledWith('A', 0, null, NaN);
 		});
@@ -72,25 +73,31 @@ describe('zb.ui.BaseListDataList: set source', function() {
 
 	it('Setting other DataList', function() {
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return w.createListWithSetupSource();
+		given('set default data-list', function() {
+			var dataList = helper.createDefaultDataList();
+			return helper
+				.setBufferSource(buffer, dataList)
+				.then(function() {
+					spyChange.reset();
+					spySelect.reset();
+				});
 		});
 		// WHEN
-		when('set source', function() {
+		when('set other data-list', function() {
 			var dataList = helper.createOtherDataList();
-			return w.doSetSource(dataList);
+			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('changedCallback called once with corresponding set', function() {
-			expect(w.po.spyChange)
+		then('changeCallback called once with corresponding set', function() {
+			expect(spyChange)
 				.callCount(1)
 				.calledWith([
 					'alpha', 'beta', 'gamma',
 					'delta', 'epsilon', 'zeta'
 				]);
 		});
-		then('selectedCallback called once with first item', function() {
-			expect(w.po.spySelected)
+		then('selectCallback called once with first item', function() {
+			expect(spySelect)
 				.callCount(1)
 				.calledWith('alpha', 0, null, NaN);
 		});
@@ -99,21 +106,58 @@ describe('zb.ui.BaseListDataList: set source', function() {
 	});
 
 	it('Re-setting same DataList', function() {
+		var dataList = helper.createDefaultDataList();
+
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return w.createListWithSetupSource();
+		given('set default data-list', function() {
+			return helper
+				.setBufferSource(buffer, dataList)
+				.then(function() {
+					spyChange.reset();
+					spySelect.reset();
+				});
 		});
 		// WHEN
-		when('set source', function() {
-			var dataList = helper.createDefaultDataList();
-			return w.doSetSource(dataList);
+		when('set same data-list', function() {
+			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('changedCallback not called', function() {
-			expect(w.po.spyChange).callCount(0);
+		then('changeCallback not called', function() {
+			expect(spyChange)
+				.callCount(0);
 		});
-		then('selectedCallback not called', function() {
-			expect(w.po.spySelected).callCount(0);
+		then('selectCallback not called', function() {
+			expect(spySelect)
+				.callCount(0);
+		});
+		// DONE
+		return then('done');
+	});
+
+	it('Re-setting almost same DataList', function() {
+		// GIVEN
+		given('set default data-list', function() {
+			var dataList = helper.createDefaultDataList();
+			return helper
+				.setBufferSource(buffer, dataList)
+				.then(function() {
+					spyChange.reset();
+					spySelect.reset();
+				});
+		});
+		// WHEN
+		when('set almost same data-list', function() {
+			var dataList = helper.createDefaultDataList();
+			return helper.setBufferSource(buffer, dataList);
+		});
+		// THEN
+		then('changeCallback not called', function() {
+			expect(spyChange)
+				.callCount(0);
+		});
+		then('selectCallback not called', function() {
+			expect(spySelect)
+				.callCount(0);
 		});
 		// DONE
 		return then('done');
@@ -123,32 +167,32 @@ describe('zb.ui.BaseListDataList: set source', function() {
 		var dataList = helper.createDefaultDataList();
 
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return w.createListWithSource(dataList);
+		given('set default data-list', function() {
+			return helper.setBufferSource(buffer, dataList);
 		});
 		given('set null', function() {
-			return w
-				.doSetSource(null)
+			return helper
+				.setBufferSource(buffer, null)
 				.then(function() {
-					w.po.spyChange.reset();
-					w.po.spySelected.reset();
+					spyChange.reset();
+					spySelect.reset();
 				});
 		});
 		// WHEN
-		when('set source', function() {
-			return w.doSetSource(dataList);
+		when('set same data-list', function() {
+			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('changedCallback called once with corresponding set', function() {
-			expect(w.po.spyChange)
+		then('changeCallback called once with corresponding set', function() {
+			expect(spyChange)
 				.callCount(1)
 				.calledWith([
 					'A', 'B', 'C',
 					'D', 'E', 'F'
 				]);
 		});
-		then('selectedCallback called once with first item', function() {
-			expect(w.po.spySelected)
+		then('selectCallback called once with first item', function() {
+			expect(spySelect)
 				.callCount(1)
 				.calledWith('A', 0, null, NaN);
 		});
@@ -160,15 +204,19 @@ describe('zb.ui.BaseListDataList: set source', function() {
 
 	it('Setting null', function() {
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return w.createListWithSource(null);
+		given('empty given to fix mocha-test-steps bug', function() {});
+		// WHEN
+		when('set null', function() {
+			return helper.setBufferSource(buffer, null);
 		});
 		// THEN
-		then('changedCallback not called', function() {
-			expect(w.po.spyChange).callCount(0);
+		then('changeCallback not called', function() {
+			expect(spyChange)
+				.callCount(0);
 		});
-		then('selectedCallback not called', function() {
-			expect(w.po.spySelected).callCount(0);
+		then('selectCallback not called', function() {
+			expect(spySelect)
+				.callCount(0);
 		});
 		// DONE
 		return then('done');
@@ -176,19 +224,26 @@ describe('zb.ui.BaseListDataList: set source', function() {
 
 	it('Re-setting null', function() {
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return w.createListWithSource(null);
+		given('set null', function() {
+			return helper
+				.setBufferSource(buffer, null)
+				.then(function() {
+					spyChange.reset();
+					spySelect.reset();
+				});
 		});
 		// WHEN
-		when('set source', function() {
-			return w.doSetSource(null);
+		when('re-set null', function() {
+			return helper.setBufferSource(buffer, null);
 		});
 		// THEN
-		then('changedCallback not called', function() {
-			expect(w.po.spyChange).callCount(0);
+		then('changeCallback not called', function() {
+			expect(spyChange)
+				.callCount(0);
 		});
-		then('selectedCallback not called', function() {
-			expect(w.po.spySelected).callCount(0);
+		then('selectCallback not called', function() {
+			expect(spySelect)
+				.callCount(0);
 		});
 		// DONE
 		return then('done');
@@ -196,22 +251,28 @@ describe('zb.ui.BaseListDataList: set source', function() {
 
 	it('Setting null after DataList', function() {
 		// GIVEN
-		given('created baselist-datalist', function() {
+		given('set default data-list', function() {
 			var dataList = helper.createDefaultDataList();
-			return w.createListWithSource(dataList);
+			return helper
+				.setBufferSource(buffer, dataList)
+				.then(function() {
+					spyChange.reset();
+					spySelect.reset();
+				});
 		});
 		// WHEN
-		when('set source', function() {
-			return w.doSetSource(null);
+		when('set null', function() {
+			return helper.setBufferSource(buffer, null);
 		});
 		// THEN
-		then('changedCallback called once with corresponding set', function() {
-			expect(w.po.spyChange)
+		then('changeCallback called once with corresponding set', function() {
+			expect(spyChange)
 				.callCount(1)
 				.calledWith([]);
 		});
-		then('selectedCallback not called', function() {
-			expect(w.po.spySelected).callCount(0);
+		then('selectCallback not called', function() {
+			expect(spySelect)
+				.callCount(0);
 		});
 		// DONE
 		return then('done');
@@ -219,25 +280,30 @@ describe('zb.ui.BaseListDataList: set source', function() {
 
 	it('Setting DataList after null', function() {
 		// GIVEN
-		given('created baselist-datalist', function() {
-			return w.createListWithSource(null);
+		given('set null', function() {
+			return helper
+				.setBufferSource(buffer, null)
+				.then(function() {
+					spyChange.reset();
+					spySelect.reset();
+				});
 		});
 		// WHEN
-		when('set source', function() {
+		when('set default data-list', function() {
 			var dataList = helper.createDefaultDataList();
-			return w.doSetSource(dataList);
+			return helper.setBufferSource(buffer, dataList);
 		});
 		// THEN
-		then('changedCallback called once with corresponding set', function() {
-			expect(w.po.spyChange)
+		then('changeCallback called once with corresponding set', function() {
+			expect(spyChange)
 				.callCount(1)
 				.calledWith([
 					'A', 'B', 'C',
 					'D', 'E', 'F'
 				]);
 		});
-		then('selectedCallback called once with first item', function() {
-			expect(w.po.spySelected)
+		then('selectCallback called once with first item', function() {
+			expect(spySelect)
 				.callCount(1)
 				.calledWith('A', 0, null, NaN);
 		});

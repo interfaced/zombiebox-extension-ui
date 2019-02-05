@@ -20,56 +20,57 @@ goog.require('zb.ui.Throbber');
  * @constructor
  * @extends {some.BaseApplication}
  */
-some.Application = function() {
-	goog.base(this);
+some.Application = class extends some.BaseApplication {
+	constructor() {
+		super();
 
-	this._throbber = null;
-};
-goog.inherits(some.Application, some.BaseApplication);
+		this._throbber = null;
+	}
 
 
-/**
- * @param {IThenable} job
- */
-some.Application.prototype.addThrobberJob = function(job) {
-	if (this._throbber) {
-		this._throbber.wait(job);
+	/**
+	 * @param {IThenable} job
+	 */
+	addThrobberJob(job) {
+		if (this._throbber) {
+			this._throbber.wait(job);
+		}
+	}
+
+
+	/**
+	 * @override
+	 */
+	_onDeviceReady(eventName, device) {
+		super._onDeviceReady(eventName, device);
+
+		this._createThrobber();
+	}
+
+
+	/**
+	 * @protected
+	 */
+	_createThrobber() {
+		var throbber = new zb.ui.Throbber;
+	
+		var throbberContainer = zb.html.div('a-throbber zb-fullscreen');
+		throbberContainer.appendChild(this._throbber.getContainer());
+		this._body.appendChild(throbberContainer);
+		
+		this._throbber.on(this._throbber.EVENT_START, function() {
+			zb.html.show(throbberContainer);
+		});
+		this._throbber.on(this._throbber.EVENT_STOP, function() {
+			zb.html.hide(throbberContainer);
+		});
 	}
 };
 
 
 /**
- * @inheritDoc
- */
-some.Application.prototype._onDeviceReady = function(eventName, device) {
-	goog.base(this, '_onDeviceReady', eventName, device);
-
-	this._createThrobber();
-};
-
-
-/**
- * @private
- */
-some.Application.prototype._createThrobber = function() {
-	var throbber = new zb.ui.Throbber;
-
-	var throbberContainer = zb.html.div('a-throbber zb-fullscreen');
-	throbberContainer.appendChild(this._throbber.getContainer());
-	this._body.appendChild(throbberContainer);
-	
-	this._throbber.on(this._throbber.EVENT_START, function() {
-		zb.html.show(throbberContainer);
-	});
-	this._throbber.on(this._throbber.EVENT_STOP, function() {
-		zb.html.hide(throbberContainer);
-	});
-};
-
-
-/**
  * @type {?zb.ui.Throbber}
- * @private
+ * @protected
  */
 some.Application.prototype._throbber;
 ```

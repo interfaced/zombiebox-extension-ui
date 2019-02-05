@@ -1,0 +1,14 @@
+{{$ zb.ui.templates.extendedList }}
+
+<div class="w-base-list w-extended-list">
+	<div class="w-base-list__wrap" data-export-id="{{@wrapper}}">
+		<div class="w-base-list__slider" data-export-id="{{@slider}}"></div>
+	</div>
+
+	{{% zb.ui.ScrollBar, {}, bar }}
+
+	<div class="w-extended-list__arrow _up" data-export-id="{{@arrowUp}}"></div>
+	<div class="w-extended-list__arrow _down" data-export-id="{{@arrowDown}}"></div>
+	<div class="w-extended-list__arrow _left" data-export-id="{{@arrowLeft}}"></div>
+	<div class="w-extended-list__arrow _right" data-export-id="{{@arrowRight}}"></div>
+</div>

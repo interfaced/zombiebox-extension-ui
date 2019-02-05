@@ -35,12 +35,14 @@
 		border-right-color: #000;
 	}
 
-.w-zbui-div-input__input._active {}
+.w-zbui-div-input._active {}
 	.w-zbui-div-input._active .w-zbui-div-input__input._placeholder {
 		opacity: .4;
 	}
 
-.w-zbui-div-input._password {}
+.w-zbui-div-input._type-text {}
+
+.w-zbui-div-input._type-password {}
 
 .w-zbui-div-input._theme_default {
 	width: 130px;

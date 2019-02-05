@@ -7,14 +7,7 @@
 	goog.provide('project.widgets.Keyboard');
 	goog.require('zb.ui.Keyboard');
 	
-	/**
-	 * @extends {zb.ui.Keyboard}
-	 * @constructor
-	 */
-	project.widgets.Keyboard = function() {
-		goog.base(this);
-	};
-	goog.inherits(project.widgets.Keyboard, zb.ui.Keyboard);
+	project.widgets.Keyboard = class extends zb.ui.Keyboard {};
 
 Определить типы и языки раскладок, действия:
 
@@ -47,11 +40,11 @@
 	goog.require('project.widgets.templates.keyboard.keyboard');
 
 	/**
-	 * @inheritDoc
+	 * @override
 	 */
-	project.widgets.Keyboard.prototype._renderTemplate = function() {
+	_renderTemplate() {
 		return project.widgets.templates.keyboard.keyboard(this._getTemplateData(), this._getTemplateOptions());
-	};
+	}
 
 В шаблоне описать раскладки:
 
@@ -86,9 +79,9 @@
 Обработать действия:
 
 	/**
-	 * @inheritDoc
+	 * @override
 	 */
-	project.widgets.Keyboard.prototype._handleClick = function(action) {
+	_handleClick(action) {
 		var isHandled = true;
 		switch (action) {
 			case project.widgets.Keyboard.Actions.CAPS:
@@ -104,7 +97,7 @@
 				isHandled = false;
 		}
 		return isHandled;
-	};
+	}
 
 ## Изменение раскладки
 

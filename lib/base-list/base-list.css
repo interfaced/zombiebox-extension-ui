@@ -8,7 +8,7 @@
 		display: table;
 		position: relative;
 	}
-	.w-base-list__item {
+	.w-base-list .w-base-list-item {
 		display: table-cell;
 	}
 
@@ -16,6 +16,6 @@
 	.w-base-list._is-vertical .w-base-list__slider {
 		display: block;
 	}
-	.w-base-list._is-vertical .w-base-list__item {
+	.w-base-list._is-vertical .w-base-list-item {
 		display: block;
 	}

@@ -114,37 +114,34 @@
 
 ### Интеграция со сценой
 
-    /**
-     * @extends {zb.layers.CuteScene}
-     * @constructor
-     */
-    someApp.scenes.SomeScene = function() {
-        goog.base(this);
-
-        this._createHelpBar();
-    };
-    goog.inherits(someApp.scenes.SomeScene, zb.layers.CuteScene);
-
-    /**
-     * @inheritDoc
-     */
-    someApp.scenes.SomeScene.prototype.processKey = function(zbKey, opt_event) {
-        if (goog.base(this, 'processKey', zbKey, opt_event)) {
-            return true;
+    someApp.scenes.SomeScene = class extends zb.layers.CuteScene {
+        constructor() {
+            super();
+        
+            this._createHelpBar();
         }
-        return this._helpBar.processHelpBarKey(zbKey, opt_event);
-    };
 
-    /**
-     * @protected
-     */
-    someApp.scenes.SomeScene.prototype._createHelpBar = function() {
-        this._helpBar = new zb.ui.HelpBar;
-        this._helpBar.setItems([
-            someApp.widgets.helpBarItemFactory.back(),
-            someApp.widgets.helpBarItemFactory.exit()
-        ]);
+        /**
+         * @override
+         */
+        processKey(zbKey, opt_event) {
+            if (super.processKey(zbKey, opt_event)) {
+                return true;
+            }
+            return this._helpBar.processHelpBarKey(zbKey, opt_event);
+        }
 
-        this._container.appendChild(this._helpBar.getContainer());
-        this.appendWidget(this._helpBar);
+        /**
+         * @protected
+         */
+        _createHelpBar() {
+            this._helpBar = new zb.ui.HelpBar;
+            this._helpBar.setItems([
+                someApp.widgets.helpBarItemFactory.back(),
+                someApp.widgets.helpBarItemFactory.exit()
+            ]);
+
+            this._container.appendChild(this._helpBar.getContainer());
+            this.appendWidget(this._helpBar);
+        }
     };

@@ -5,27 +5,24 @@ describe('zb.ui.BaseListDataList: select next', function() {
 	var then = mochaTestSteps.then;
 
 	var dataList, buffer, bufferPromise, spyChange, spySelect;
-	var helper = zb.ui.test.support.Helper;
+	var helper = zb.ui.test.baseListHelper;
 
 	beforeEach(function() {
+		buffer = helper.createBuffer();
 		dataList = helper.createDefaultDataList();
 		bufferPromise = helper
-			.createBuffer(dataList)
-			.then(function(result) {
-				spySelect.reset();
+			.setBufferSource(buffer, dataList)
+			.then(function() {
 				spyChange.reset();
-
-				buffer = result;
-
-				return result;
+				spySelect.reset();
 			});
 
-		spySelect = sinon.spy(helper, 'selectCallback');
 		spyChange = sinon.spy(helper, 'changeCallback');
+		spySelect = sinon.spy(helper, 'selectCallback');
 	});
 	afterEach(function() {
-		spySelect.restore();
 		spyChange.restore();
+		spySelect.restore();
 	});
 
 	it('Selecting next item', function() {

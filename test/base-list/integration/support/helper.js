@@ -1,51 +1,70 @@
-goog.provide('zb.ui.test.support.Helper');
+goog.provide('zb.ui.test.baseListHelper');
 
 
 // Common
 
-zb.ui.test.support.Helper.changeCallback = function() {
+zb.ui.test.baseListHelper.changeCallback = function() {
 	return 'changeCallback';
 };
 
-zb.ui.test.support.Helper.selectCallback = function() {
+
+zb.ui.test.baseListHelper.selectCallback = function() {
 	return 'selectCallback';
 };
 
-zb.ui.test.support.Helper.defaultOptions = {
+
+zb.ui.test.baseListHelper.defaultOptions = {
 	padding: 2,
 	lineSize: 3,
 	loadOnLeft: 1
 };
 
+
 /**
  * @param {Array.<string>} array
  * @return {zb.ui.DataList.<string>}
  */
-zb.ui.test.support.Helper.createDataList = function(array) {
+zb.ui.test.baseListHelper.createDataList = function(array) {
 	return new zb.ui.DataList(array);
 };
 
 
 /**
- * @param {zb.ui.DataList.<string>} dataList
  * @param {zb.ui.BaseListBuffer.Options=} opt_options
+ * @return {zb.ui.BaseListBuffer}
+ */
+zb.ui.test.baseListHelper.createBuffer = function(opt_options) {
+	var helper = zb.ui.test.baseListHelper;
+
+	return new zb.ui.BaseListDataList(
+		opt_options || helper.defaultOptions,
+		function() {
+			helper.changeCallback.apply(helper, arguments);
+		},
+		function() {
+			helper.selectCallback.apply(helper, arguments);
+		}
+	);
+};
+
+
+/**
+ * @param {zb.ui.BaseListBuffer} buffer
+ * @param {?zb.ui.DataList.<string>} source
  * @return {IThenable.<zb.ui.BaseListBuffer>}
  */
-zb.ui.test.support.Helper.createBuffer = function(dataList, opt_options) {
-	var helper = zb.ui.test.support.Helper;
-	var buffer = new zb.ui.BaseListDataList(function() {
-		helper.changeCallback.apply(helper, arguments);
-	}, function() {
-		helper.selectCallback.apply(helper, arguments);
-	});
+zb.ui.test.baseListHelper.setBufferSource = function(buffer, source) {
+	buffer.setSource(source);
 
-	buffer.setSource(dataList, opt_options || helper.defaultOptions);
-
-	return dataList
-		.preload()
-		.then(function() {
-			return buffer;
-		});
+	if (source) {
+		return source
+			.preload()
+			.then(function() {
+				return buffer;
+			});
+	} else {
+		return Promise.resolve(buffer);
+	}
 };
 
 // Default
@@ -53,7 +72,7 @@ zb.ui.test.support.Helper.createBuffer = function(dataList, opt_options) {
 /**
  * @return {Array.<string>}
  */
-zb.ui.test.support.Helper.createDefaultArray = function() {
+zb.ui.test.baseListHelper.createDefaultArray = function() {
 	return [
 		'A', 'B', 'C',
 		'D', 'E', 'F',
@@ -71,18 +90,19 @@ zb.ui.test.support.Helper.createDefaultArray = function() {
 /**
  * @return {zb.ui.DataList.<string>}
  */
-zb.ui.test.support.Helper.createDefaultDataList = function() {
-	var array = zb.ui.test.support.Helper.createDefaultArray();
-	return zb.ui.test.support.Helper.createDataList(array);
+zb.ui.test.baseListHelper.createDefaultDataList = function() {
+	var array = zb.ui.test.baseListHelper.createDefaultArray();
+	return zb.ui.test.baseListHelper.createDataList(array);
 };
 
 
 /**
  * @return {IThenable.<zb.ui.BaseListBuffer>}
  */
-zb.ui.test.support.Helper.createDefaultBuffer = function() {
-	var dataList = zb.ui.test.support.Helper.createDefaultDataList();
-	return zb.ui.test.support.Helper.createBuffer(dataList);
+zb.ui.test.baseListHelper.createDefaultBuffer = function() {
+	var buffer = zb.ui.test.baseListHelper.createBuffer();
+	var dataList = zb.ui.test.baseListHelper.createDefaultDataList();
+	return zb.ui.test.baseListHelper.setBufferSource(buffer, dataList);
 };
 
 // Other
@@ -90,7 +110,7 @@ zb.ui.test.support.Helper.createDefaultBuffer = function() {
 /**
  * @return {Array.<string>}
  */
-zb.ui.test.support.Helper.createOtherArray = function() {
+zb.ui.test.baseListHelper.createOtherArray = function() {
 	return [
 		'alpha', 'beta', 'gamma',
 		'delta', 'epsilon', 'zeta',
@@ -107,18 +127,19 @@ zb.ui.test.support.Helper.createOtherArray = function() {
 /**
  * @return {zb.ui.DataList.<string>}
  */
-zb.ui.test.support.Helper.createOtherDataList = function() {
-	var array = zb.ui.test.support.Helper.createOtherArray();
-	return zb.ui.test.support.Helper.createDataList(array);
+zb.ui.test.baseListHelper.createOtherDataList = function() {
+	var array = zb.ui.test.baseListHelper.createOtherArray();
+	return zb.ui.test.baseListHelper.createDataList(array);
 };
 
 
 /**
  * @return {IThenable.<zb.ui.BaseListBuffer>}
  */
-zb.ui.test.support.Helper.createOtherBuffer = function() {
-	var dataList = zb.ui.test.support.Helper.createOtherDataList();
-	return zb.ui.test.support.Helper.createBuffer(dataList);
+zb.ui.test.baseListHelper.createOtherBuffer = function() {
+	var buffer = zb.ui.test.baseListHelper.createBuffer();
+	var dataList = zb.ui.test.baseListHelper.createOtherDataList();
+	return zb.ui.test.baseListHelper.setBufferSource(buffer, dataList);
 };
 
 // Empty
@@ -126,7 +147,7 @@ zb.ui.test.support.Helper.createOtherBuffer = function() {
 /**
  * @return {Array.<string>}
  */
-zb.ui.test.support.Helper.createEmptyArray = function() {
+zb.ui.test.baseListHelper.createEmptyArray = function() {
 	return [];
 };
 
@@ -134,25 +155,17 @@ zb.ui.test.support.Helper.createEmptyArray = function() {
 /**
  * @return {zb.ui.DataList.<string>}
  */
-zb.ui.test.support.Helper.createEmptyDataList = function() {
-	var array = zb.ui.test.support.Helper.createEmptyArray();
-	return zb.ui.test.support.Helper.createDataList(array);
+zb.ui.test.baseListHelper.createEmptyDataList = function() {
+	var array = zb.ui.test.baseListHelper.createEmptyArray();
+	return zb.ui.test.baseListHelper.createDataList(array);
 };
 
 
 /**
  * @return {IThenable.<zb.ui.BaseListBuffer>}
  */
-zb.ui.test.support.Helper.createEmptyBuffer = function() {
-	var dataList = zb.ui.test.support.Helper.createEmptyDataList();
-	return zb.ui.test.support.Helper.createBuffer(dataList);
-};
-
-// Other
-
-zb.ui.test.support.Helper.setSource = function(buffer, source) {
-	var helper = zb.ui.test.support.Helper;
-	buffer.setSource(source, helper.defaultOptions);
-
-	return source ? source.preload() : Promise.resolve();
+zb.ui.test.baseListHelper.createEmptyBuffer = function() {
+	var buffer = zb.ui.test.baseListHelper.createBuffer();
+	var dataList = zb.ui.test.baseListHelper.createEmptyDataList();
+	return zb.ui.test.baseListHelper.setBufferSource(buffer, dataList);
 };

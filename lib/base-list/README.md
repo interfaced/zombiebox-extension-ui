@@ -169,23 +169,22 @@
 		goog.require('zb.html');
 		goog.require('zb.ui.BaseListItem');
 		
-		/**
-		 * @param {zb.ui.IBaseListItem.Input} params
-		 * @extends {zb.ui.BaseListItem}
-		 * @constructor
-		 */
-		project.widgets.MyCustomItem = function(params) {
-			goog.base(this, params);
-		};
-		goog.inherits(project.widgets.MyCustomItem, zb.ui.BaseListItem);
-		
-		/**
-		 * @inheritDoc
-		 */
-		project.widgets.MyCustomItem.prototype._createContainer = function() {
-			var result = project.widgets.templates.myCustomItem.myCustomItem({title: this._data});
-		
-			this._container = (zb.html.findFirstElementNode(result.root));
+		project.widgets.MyCustomItem = class extends zb.ui.BaseListItem {
+			/**
+			 * @param {zb.ui.IBaseListItem.Input} params
+			 */
+			constructor(params) {
+				super(params);
+			}
+			
+			/**
+			 * @override
+			 */
+			_createContainer() {
+				var result = project.widgets.templates.myCustomItem.myCustomItem({title: this._data});
+			
+				this._container = (zb.html.findFirstElementNode(result.root));
+			}
 		};
 
 5. В файле `my-custom-item.jst` определите шаблон [элемента](#markdown-header-items):

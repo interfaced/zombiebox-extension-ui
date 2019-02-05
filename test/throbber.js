@@ -1,9 +1,9 @@
-var expect = chai.expect;
-var given = mochaTestSteps.given;
-var when = mochaTestSteps.when;
-var then = mochaTestSteps.then;
-
 describe('zb.ui.Throbber', function() {
+	var expect = chai.expect;
+	var given = mochaTestSteps.given;
+	var when = mochaTestSteps.when;
+	var then = mochaTestSteps.then;
+
 	var Throbber = zb.ui.Throbber;
 
 	describe('Class', function() {
@@ -67,7 +67,7 @@ describe('zb.ui.Throbber', function() {
 				stepInterval: 300
 			});
 
-			expect(throbber._container).instanceOf(HTMLElement);
+			expect(throbber._container).equal(container);
 			expect(throbber._step).equal(100);
 			expect(throbber._width).equal(200);
 			expect(throbber._timer._delay).equal(300);

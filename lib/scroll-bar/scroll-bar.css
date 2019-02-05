@@ -1,11 +1,10 @@
+/* ScrollBar widget
+*******************************/
+
 .w-scroll-bar {
 	height: 10px;
 	background: #fff;
 	position: relative;
-}
-.w-scroll-bar._is-vertical {
-	width: 10px;
-	height: auto;
 }
 	.w-scroll-bar__thumb {
 		background: #000;
@@ -15,3 +14,8 @@
 		bottom: 0;
 		left: 0;
 	}
+
+.w-scroll-bar._is-vertical {
+	width: 10px;
+	height: auto;
+}

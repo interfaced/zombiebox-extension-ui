@@ -1,9 +1,6 @@
-var expect = chai.expect;
-var given = mochaTestSteps.given;
-var when = mochaTestSteps.when;
-var then = mochaTestSteps.then;
-
 describe('zb.ui.Button', function() {
+	var expect = chai.expect;
+
 	var Button = zb.ui.Button;
 
 	describe('Class', function() {
@@ -14,6 +11,41 @@ describe('zb.ui.Button', function() {
 			expect(function() {
 				new Button;
 			}).not.to.throw();
+		});
+	});
+
+	describe('Arguments', function() {
+		it('No arguments', function() {
+			var instance = new Button;
+
+			expect(instance.getContainer()).instanceOf(HTMLElement);
+			expect(instance.getData()).to.be.undefined;
+		});
+		it('Only container argument', function() {
+			var container = document.createElement('div');
+			var instance = new Button(container);
+
+			expect(instance.getContainer()).equal(container);
+			expect(instance.getData()).to.be.undefined;
+		});
+		it('Only data argument', function() {
+			var instance = new Button('some data');
+
+			expect(instance.getContainer()).instanceOf(HTMLElement);
+			expect(instance.getData()).equal('some data');
+		});
+		it('Only data argument with undefined container', function() {
+			var instance = new Button(undefined, 'some data');
+
+			expect(instance.getContainer()).instanceOf(HTMLElement);
+			expect(instance.getData()).equal('some data');
+		});
+		it('Both arguments', function() {
+			var container = document.createElement('div');
+			var instance = new Button(container, 'some data');
+
+			expect(instance.getContainer()).equal(container);
+			expect(instance.getData()).equal('some data');
 		});
 	});
 
