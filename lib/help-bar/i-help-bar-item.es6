@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 goog.provide('zb.ui.IHelpBarItem');
+goog.require('zb.device.input.Keys');
 goog.require('zb.widgets.IWidget');
 
 
@@ -32,7 +33,7 @@ zb.ui.IHelpBarItem = class {
 	 * @param {zb.device.input.Keys} zbKey
 	 * @return {boolean}
 	 */
-	isMyKey(zbKey) {}
+	hasKey(zbKey) {}
 
 
 	/**

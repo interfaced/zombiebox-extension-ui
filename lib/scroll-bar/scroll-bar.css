@@ -3,11 +3,11 @@
 
 .w-scroll-bar {
 	height: 10px;
-	background: #fff;
+	background-color: #fff;
 	position: relative;
 }
 	.w-scroll-bar__thumb {
-		background: #000;
+		background-color: #000;
 		position: absolute;
 		top: 0;
 		right: 0;

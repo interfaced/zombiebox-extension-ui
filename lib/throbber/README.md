@@ -79,7 +79,7 @@ some.Application.prototype._throbber;
 
 ```css
 .a-throbber {
-	background: rgba(0, 0, 0, .5);
+	background-color: rgba(0, 0, 0, .5);
 	display: none;
 	z-index: 100;
 }
@@ -87,6 +87,7 @@ some.Application.prototype._throbber;
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		margin: -44px 0 0 -44px;
+		margin-top: -44px;
+		margin-left: -44px;
 	}
 ```

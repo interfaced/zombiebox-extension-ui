@@ -10,6 +10,16 @@
 
 ## Описание публичных методов
 
+### Метод `hasKey(zbKey)`
+
+#### Параметры
+* zbKey
+	* Тип — `zb.device.input.Keys`.
+
+#### Описание
+Проверяет, должен ли `zb.ui.HelpBar` обработать переданный `zbKey`.
+Возвращает `boolean`.
+
 ### Метод `processHelpBarKey(zbKey[, opt_event])`
 
 #### Параметры

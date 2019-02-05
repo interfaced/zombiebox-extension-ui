@@ -11,6 +11,9 @@ goog.require('zb.ui.DataList');
 
 
 
+/**
+ * @deprecated Use zb.ui.BaseList with lineSize param instead.
+ */
 zb.ui.MatrixDataList = class extends zb.ui.DataList {
 	constructor() {
 		super();

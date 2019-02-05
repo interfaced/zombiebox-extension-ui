@@ -203,19 +203,36 @@ zb.ui.BaseList = class extends zb.widgets.CuteWidget {
 	}
 
 
-	// TODO: переименовать методы в getSize и getCurrentIndex
 	/**
+	 * @deprecated Use .getSize() instead.
 	 * @return {number}
 	 */
 	getLocalSize() {
-		return this._buffer.getLocalSize();
+		return this.getSize();
 	}
 
 
 	/**
 	 * @return {number}
 	 */
+	getSize() {
+		return this._buffer.getLocalSize();
+	}
+
+
+	/**
+	 * @deprecated Use .getCurrentIndex() instead.
+	 * @return {number}
+	 */
 	getLocalIndex() {
+		return this.getCurrentIndex();
+	}
+
+
+	/**
+	 * @return {number}
+	 */
+	getCurrentIndex() {
 		return this._buffer.getLocalIndex();
 	}
 
@@ -232,7 +249,7 @@ zb.ui.BaseList = class extends zb.widgets.CuteWidget {
 	 * @return {?zb.ui.IBaseListItem}
 	 */
 	getCurrentItem() {
-		return this._items[this.getLocalIndex()] || null;
+		return this._items[this.getCurrentIndex()] || null;
 	}
 
 

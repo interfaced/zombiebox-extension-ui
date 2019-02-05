@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 goog.provide('zb.ui.HelpBar');
+goog.require('zb.device.input.Keys');
 goog.require('zb.html');
 goog.require('zb.ui.HelpBarItem');
 goog.require('zb.ui.IHelpBarItem');
@@ -30,6 +31,28 @@ zb.ui.HelpBar = class extends zb.widgets.CuteWidget {
 
 		this._items = [];
 		this._itemsOrder = null;
+	}
+
+
+	/**
+	 * @override
+	 */
+	isFocusable() {
+		const hasItems = this._items.length > 0;
+		if (hasItems) {
+			return super.isFocusable();
+		} else {
+			return false;
+		}
+	}
+
+
+	/**
+	 * @param {zb.device.input.Keys} zbKey
+	 * @return {boolean}
+	 */
+	hasKey(zbKey) {
+		return this._items.some((item) => item.hasKey(zbKey));
 	}
 
 
@@ -102,25 +125,12 @@ zb.ui.HelpBar = class extends zb.widgets.CuteWidget {
 	 */
 	getItem(zbKey) {
 		for (let i = this._items.length; i--;) {
-			if (this._items[i].isMyKey(zbKey)) {
+			if (this._items[i].hasKey(zbKey)) {
 				return this._items[i];
 			}
 		}
 
 		return null;
-	}
-
-
-	/**
-	 * @override
-	 */
-	isFocusable() {
-		const hasItems = this._items.length > 0;
-		if (hasItems) {
-			return super.isFocusable();
-		} else {
-			return false;
-		}
 	}
 
 

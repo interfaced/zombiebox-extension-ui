@@ -35,14 +35,22 @@ zb.ui.HelpBarItem = class extends zb.widgets.Widget {
 	 * @override
 	 */
 	processHelpBarKey(zbKey, e) {
-		return this._handleKey(this.isMyKey(zbKey), zbKey);
+		return this._handleKey(this.hasKey(zbKey), zbKey);
+	}
+
+
+	/**
+	 * @deprecated Use hasKey method instead.
+	 */
+	isMyKey(zbKey) {
+		return this.hasKey(zbKey);
 	}
 
 
 	/**
 	 * @override
 	 */
-	isMyKey(zbKey) {
+	hasKey(zbKey) {
 		return this._keys.indexOf(zbKey) !== -1;
 	}
 
