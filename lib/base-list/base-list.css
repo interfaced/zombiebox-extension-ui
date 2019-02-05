@@ -11,3 +11,11 @@
 	.w-base-list__item {
 		display: table-cell;
 	}
+
+.w-base-list._is-vertical {}
+	.w-base-list._is-vertical .w-base-list__slider {
+		display: block;
+	}
+	.w-base-list._is-vertical .w-base-list__item {
+		display: block;
+	}
