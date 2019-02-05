@@ -12,14 +12,14 @@
 Определить типы и языки раскладок, действия:
 
 	/**
-	 * @enum {zb.ui.Keyboard.Type}
+	 * @enum {zb.ui.KeyboardLayout.Type}
 	 */
 	project.widgets.Keyboard.Types = {
 		ABC: 'abc'
 	};
 	
 	/**
-	 * @enum {zb.ui.Keyboard.Lang}
+	 * @enum {zb.ui.KeyboardLayout.Lang}
 	 */
 	project.widgets.Keyboard.Langs = {
 		EN: 'en',
@@ -27,7 +27,7 @@
 	};
 	
 	/**
-	 * @enum {zb.ui.Keyboard.Action}
+	 * @enum {zb.ui.KeyboardLayout.Action}
 	 */
 	project.widgets.Keyboard.Actions = {
 		CAPS: 'caps',

@@ -1,6 +1,32 @@
 Руководство по миграции
 -----------------------
 
+## С версии 0.4.2 на версию 0.5.0
+
+### `zb.ui.BaseList`:
+
+* Удален метод `getLocalSize()`. Вместо него нужно использовать `getSize()`;
+* Удален метод `getLocalIndex()`. Вместо него нужно использовать `getCurrentIndex()`.
+
+### `zb.ui.HelpBarItem`:
+
+* Удален метод `isMyKey()`. Вместо него нужно использовать `hasKey()`.
+
+### `zb.ui.DynamicList`:
+
+* Удален метод `getFrameSize()`. Получить `frameSize` теперь можно только отнаследовавшись.
+
+### `zb.ui.MatrixDataList`:
+
+* Удален класс `zb.ui.MatrixDataList`. Вместо него нужно использовать `zb.ui.BaseList` с опцией `lineSize`.
+
+### `zb.ui.Keyboard`:
+
+* `zb.ui.Keyboard.Type` перенесен в `zb.ui.KeyboardLayout.Type`;
+* `zb.ui.Keyboard.Lang` перенесен в `zb.ui.KeyboardLayout.Lang`;
+* `zb.ui.Keyboard.Action` перенесен в `zb.ui.KeyboardLayout.Action`;
+* `zb.ui.Keyboard.Data` перенесен в `zb.ui.KeyboardLayout.Data`.
+
 ## С версии 0.4.1 на версию 0.4.2
 
 ### `zb.ui.BaseList`:

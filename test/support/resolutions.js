@@ -1,4 +1,6 @@
 goog.provide('zb.device.Resolution');
+goog.provide('zb.device.ResolutionInfo');
+goog.provide('zb.device.ResolutionInfoItem');
 
 
 /**

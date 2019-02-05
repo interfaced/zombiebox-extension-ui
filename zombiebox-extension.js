@@ -4,36 +4,33 @@ var path = require('path');
 /**
  * @implements {IZBAddon}
  */
-var extension = function() {
-
-};
-
-
-/**
- * @return {string}
- */
-extension.prototype.getName = function() {
-	return 'ui';
-};
+Extension = class {
+	/**
+	 * @override
+	 */
+	getName() {
+		return 'ui';
+	}
 
 
-/**
- * @return {string}
- */
-extension.prototype.getPublicDir = function() {
-	return path.join(__dirname, 'lib');
-};
+	/**
+	 * @override
+	 */
+	getPublicDir() {
+		return path.join(__dirname, 'lib');
+	}
 
 
-/**
- * @return {Object}
- */
-extension.prototype.getConfig = function() {
-	return {};
+	/**
+	 * @override
+	 */
+	getConfig() {
+		return {};
+	}
 };
 
 
 /**
  * @type {IZBAddon}
  */
-module.exports = extension;
+module.exports = Extension;

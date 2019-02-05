@@ -32,7 +32,6 @@ describe('zb.ui.DynamicList common', function() {
 				'isStartReached',
 				'isEndReached',
 				'getBufferStart',
-				'getFrameSize',
 				'preload',
 				'loadItems',
 				'loadNextFrame',
@@ -65,10 +64,6 @@ describe('zb.ui.DynamicList common', function() {
 
 			it('getBufferStart should returns a number', function() {
 				expect(instance.getBufferStart()).is.a('number');
-			});
-
-			it('getFrameSize should returns a number', function() {
-				expect(instance.getFrameSize()).is.a('number');
 			});
 
 			it('getSize should returns a positive number', function() {

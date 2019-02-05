@@ -9,7 +9,6 @@ module.exports = function(config) {
 
 			'lib/**/*.jst',
 			'lib/**/*.js',
-			'lib/**/*.es6',
 
 			'node_modules/mocha-test-steps/lib/mocha-test-steps.js',
 			'test/support/**/*.js',
@@ -18,20 +17,20 @@ module.exports = function(config) {
 			'test/**/*.js'
 		],
 		preprocessors: {
-			'node_modules/zombiebox/zb/**/*.js': ['closure'],
-			'node_modules/zombiebox/zb/**/*.jst': ['cutejs', 'closure'],
+			'node_modules/zombiebox/zb/**/!(base).js': ['babel', 'closure'],
+			'node_modules/zombiebox/zb/**/*.jst': ['cutejs', 'babel', 'closure'],
 
-			'lib/**/*.js': ['closure'],
-			'lib/**/*.es6': ['babel', 'closure'],
-			'lib/**/*.jst': ['cutejs', 'closure'],
+			'lib/**/*.js': ['babel', 'closure'],
+			'lib/**/*.jst': ['cutejs', 'babel', 'closure'],
 
-			'test/support/**/*.js': ['closure']
+			'test/support/**/*.js': ['babel', 'closure']
 		},
 		exclude: [
 			'node_modules/zombiebox/zb/lib/vendor/json-typedef.js',
 			'node_modules/zombiebox/zb/lib/vendor/thenable-typedef.js',
 
 			'node_modules/zombiebox/zb/ui/**/*',
+			'node_modules/zombiebox/zb/std/plain/test/**/*',
 
 			'test/demo/**/*'
 		],
