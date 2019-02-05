@@ -1,0 +1,27 @@
+{
+  "name": "zombiebox-extension-ui",
+  "version": "0.1.0",
+  "main": "zombiebox-extension.js",
+  "scripts": {
+    "test": "karma start karma.components.conf.js --single-run"
+  },
+  "engines": {
+    "node": ">=0.10.35"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "karma": "^0.12.23",
+    "karma-chai": "^0.1.0",
+    "karma-closure": "git://github.com/Medium/karma-closure#nick-multipleprovides",
+    "karma-cutejs-preprocessor": "^0.1.2",
+    "karma-junit-reporter": "^0.2.2",
+    "karma-mocha": "^0.1.9",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon-chai": "^0.3.0",
+    "mocha": "^1.21.4",
+    "mocha-test-steps": "^0.1.0",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0",
+    "zombiebox": "0.0.192"
+  }
+}

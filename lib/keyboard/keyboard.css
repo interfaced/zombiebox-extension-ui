@@ -1,0 +1,8 @@
+/* Keyboard
+*******************************/
+
+.w-keyboard {}
+
+.w-keyboard._caps {
+	text-transform: uppercase;
+}

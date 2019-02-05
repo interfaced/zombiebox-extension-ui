@@ -1,0 +1,83 @@
+/* DivInput widget
+*******************************/
+
+.w-zbui-div-input {
+	overflow: hidden;
+}
+	.w-zbui-div-input__wrapper {
+		position: relative;
+	}
+		.w-zbui-div-input__wrapper:before {
+			content: '\00a0';
+			display: block;
+		}
+	.w-zbui-div-input__input {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		padding-right: 1px;
+	}
+	.w-zbui-div-input__input._placeholder {
+		color: #8c8e91;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	.w-zbui-div-input__input._fake {
+		color: transparent;
+	}
+		.w-zbui-div-input__input._fake:after {
+			width: 1px;
+			background-color: #000;
+			content: '';
+			display: none;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+.w-zbui-div-input._caret-visible {}
+	.w-zbui-div-input._caret-visible .w-zbui-div-input__input._fake:after {
+		display: block;
+		animation: inputCaret 1s linear 0s infinite;
+	}
+
+.w-zbui-div-input__input._active {}
+	.w-zbui-div-input._active .w-zbui-div-input__input._placeholder {
+		opacity: .4;
+	}
+
+.w-zbui-div-input._password {}
+
+.w-zbui-div-input._theme_default {
+	width: 130px;
+	height: 18px;
+	background-color: #fff;
+	display: inline-block;
+	outline: 2px solid #f5deb3;
+}
+	.w-zbui-div-input._theme_default .w-zbui-div-input__input {
+		color: #000;
+		border: 2px inset transparent;
+	}
+
+.w-zbui-div-input._theme_default._active {
+	outline-color: #3b99fc;
+}
+
+@keyframes inputCaret {
+	0% {
+		opacity: 1;
+	}
+	49% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}

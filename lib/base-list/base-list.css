@@ -1,0 +1,13 @@
+/* BaseList widget
+*******************************/
+
+.w-base-list {
+	overflow: hidden;
+}
+	.w-base-list__slider {
+		display: table;
+		position: relative;
+	}
+	.w-base-list__item {
+		display: table-cell;
+	}

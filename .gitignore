@@ -1,0 +1,6 @@
+\.idea
+node_modules
+/test-results\.xml$
+\.code-cache/[^\.].*
+demo/.*/dist/[^\.].*
+doc-tools/public/.*\.html
