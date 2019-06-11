@@ -1,24 +1,53 @@
-const path = require('path');
-const {nsUtils} = require('eslint-plugin-goog');
+const {join, dirname} = require('path');
+
+function resolveModulePath(packageName) {
+	const packageInfoPath = require.resolve(`${packageName}/package.json`);
+	return join(dirname(packageInfoPath), require(packageInfoPath).module);
+}
 
 module.exports = {
-	extends: 'interfaced/zombiebox',
-	settings: {
-		knownNamespaces: [
-			...nsUtils.findByPattern(path.join(__dirname , 'lib', '**', '*.js')),
-			...nsUtils.findByPattern(path.join(__dirname , 'node_modules', 'zombiebox', '**', '*.js'))
-		]
-	},
-	rules: {
-		'no-else-return': 'off',
-		'padded-blocks': 'off'
-	},
+	extends: 'interfaced',
 	overrides: [
 		Object.assign(
 			{
-				files: ['index.js'],
+				files: ['lib/**/*.js', 'test/components/**/*.js'],
+				settings: {
+					'import/resolver': {
+						alias: [
+							['zb', resolveModulePath('zombiebox')],
+							['ui', join(__dirname, 'lib')]
+						]
+					}
+				}
+			},
+			require('eslint-config-interfaced/overrides/esm')
+		),
+		{
+			files: ['lib/**/*.js', 'test/components/**/*.js'],
+			rules: {
+				'no-else-return': 'off',
+				'padded-blocks': 'off',
+				'import/extensions': ['error', 'never', {jst: 'always'}],
+				'import/no-unresolved': ['error', {ignore: ['^generated/']}]
+			}
+		},
+		Object.assign(
+			{
+				files: ['test/karma.*.conf.js', 'index.js']
 			},
 			require('eslint-config-interfaced/overrides/node')
-		)
-	]
+		),
+		{
+			files: ['test/components/**/*.js'],
+			env: {
+				mocha: true
+			},
+			globals: {
+				expect: true,
+				chai: true,
+				sinon: true,
+				mochaTestSteps: true
+			}
+		}
+	],
 };

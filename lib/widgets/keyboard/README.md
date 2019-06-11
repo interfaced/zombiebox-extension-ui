@@ -1,68 +1,71 @@
-# Виджет zb.ui.widgets.AbstractKeyboard
+# Виджет AbstractKeyboard
 
 ## Интеграция
 
-Для того, чтобы реализовать клавиатуру, нужно отнаследоваться от `zb.ui.widgets.AbstractKeyboard`:
+Для того, чтобы реализовать клавиатуру, нужно отнаследоваться от `AbstractKeyboard`:
 
-	goog.provide('project.widgets.Keyboard');
-	goog.require('zb.ui.widgets.AbstractKeyboard');
+	import AbstractKeyboard, {Action as AbstractKeyboardAction} from 'ui/widgets/keyboard/abstract-keyboard';
 	
-	project.widgets.Keyboard = class extends zb.ui.widgets.AbstractKeyboard {};
+	class Keyboard extends AbstractKeyboard {};
 
 Определить типы и языки раскладок, действия:
+	
+	import {
+		Type as KeyboardLayoutType,
+		Lang as KeyboardLayoutLang,
+		Action as KeyboardLayoutAction
+	} from 'ui/widgets/keyboard/keyboard-layout';
 
 	/**
-	 * @enum {zb.ui.widgets.KeyboardLayout.Type}
+	 * @enum {KeyboardLayoutType}
 	 */
-	project.widgets.Keyboard.Types = {
+	const Type = {
 		ABC: 'abc'
 	};
 	
 	/**
-	 * @enum {zb.ui.widgets.KeyboardLayout.Lang}
+	 * @enum {KeyboardLayoutLang}
 	 */
-	project.widgets.Keyboard.Langs = {
+	const Lang = {
 		EN: 'en',
 		RU: 'ru'
 	};
 	
 	/**
-	 * @enum {zb.ui.widgets.KeyboardLayout.Action}
+	 * @enum {KeyboardLayoutAction}
 	 */
-	project.widgets.Keyboard.Actions = {
+	const Action = {
 		LANG_EN: 'lang-en',
 		LANG_RU: 'lang-ru'
 	};
 
 Создать и подключить пустой шаблон виджета:
 
-	goog.require('project.widgets.templates.keyboard.keyboard');
+	import * as template from 'generated/cutejs/...';
 
 	/**
 	 * @override
 	 */
 	_renderTemplate() {
-		return project.widgets.templates.keyboard.keyboard(this._getTemplateData(), this._getTemplateOptions());
+		return template.render(this._getTemplateData(), this._getTemplateOptions());
 	}
 
 В шаблоне описать раскладки:
 
-	{{$ project.widgets.templates.keyboard.keyboard }}
-	
 	<div class="w-zbui-keyboard">
-		<div class="w-zbui-keyboard__layout" data-component="{{% zb.ui.widgets.KeyboardLayout, {type: project.widgets.Keyboard.Types.ABC, lang: project.widgets.Keyboard.Langs.EN}, layoutAbcEn }}">
+		<div class="w-zbui-keyboard__layout" data-component="{{% KeyboardLayout, {type: Type.ABC, lang: Lang.EN}, layoutAbcEn }}">
 			{{ "a b c d e f g h i".split(" ").forEach((sym) => { }}
 				<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcEn[]}}">{{=sym}}</div>
 			{{ }); }}
-			<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcEn[]}}" data-keyboard-action="{{=zb.ui.widgets.AbstractKeyboard.Action.TOGGLE_CAPS}}">&uarr;</div>
-			<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcEn[]}}" data-keyboard-action="{{=project.widgets.Keyboard.Actions.LANG_RU}}">АБВ</div>
+			<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcEn[]}}" data-keyboard-action="{{=AbstractKeyboardAction.TOGGLE_CAPS}}">&uarr;</div>
+			<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcEn[]}}" data-keyboard-action="{{=Action.LANG_RU}}">АБВ</div>
 		</div>
-		<div class="w-zbui-keyboard__layout" data-component="{{% zb.ui.widgets.KeyboardLayout, {type: project.widgets.Keyboard.Types.ABC, lang: project.widgets.Keyboard.Langs.RU}, layoutAbcRu }}">
+		<div class="w-zbui-keyboard__layout" data-component="{{% KeyboardLayout, {type: Type.ABC, lang: Lang.RU}, layoutAbcRu }}">
 			{{ "а б в г д е ё ж з".split(" ").forEach((sym) => { }}
 				<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcRu[]}}">{{=sym}}</div>
 			{{ }); }}
-			<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcRu[]}}" data-keyboard-action="{{=zb.ui.widgets.AbstractKeyboard.Action.TOGGLE_CAPS}}">&uarr;</div>
-			<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcRu[]}}" data-keyboard-action="{{=project.widgets.Keyboard.Actions.LANG_EN}}">ABC</div>
+			<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcRu[]}}" data-keyboard-action="{{=AbstractKeyboardAction.TOGGLE_CAPS}}">&uarr;</div>
+			<div class="w-zbui-keyboard-item" data-export-id="{{@itemsAbcRu[]}}" data-keyboard-action="{{=Action.LANG_EN}}">ABC</div>
 		</div>
 	</div>
 
@@ -75,20 +78,20 @@
 
 	this._setLayout(this._exported.layoutAbcEn);
 
-Базовый набор действий находится в `zb.ui.widgets.AbstractKeyboard.Action`. Для их обработки нужно вызвать базовую
+Базовый набор действий находится в перечислении `Action` внутри модуля `ui/widgets/keyboard/abstract-keyboard`. Для их обработки нужно вызвать базовую
 реализацию метода `_handleClick()`. Остальные действия обрабатываются при наследовании:
 
 	/**
 	 * @override
 	 */
 	_handleClick(action) {
-		var isHandled = true;
+		const isHandled = true;
 		switch (action) {
-			case project.widgets.Keyboard.Actions.LANG_RU:
-				this.setLang(project.widgets.Keyboard.Langs.RU);
+			case KeyboardLayoutAction.LANG_RU:
+				this.setLang(Lang.RU);
 				break;
-			case project.widgets.Keyboard.Actions.LANG_EN:
-				this.setLang(project.widgets.Keyboard.Langs.EN);
+			case KeyboardLayoutAction.LANG_EN:
+				this.setLang(Lang.EN);
 				break;
 			default:
 				isHandled = false;
@@ -104,11 +107,11 @@
 
 Для того, чтобы изменить регистр, нужно вызывать метод `setCaps`, передавая ему `true`, если нужно установить верхний регистр и `false`, если нужно установить нижний регистр.
 
-## Интеграция с zb.ui.widgets.Input
+## Интеграция с Input
 
 Инстанс инпута можно передать при создании виджета:
 
-	new project.widgets.Keyboard({
+	new Keyboard({
 		input: this._exported.input
 	})
 

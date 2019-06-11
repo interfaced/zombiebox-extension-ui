@@ -1,4 +1,4 @@
-# Виджет zb.ui.widgets.HelpBar
+# Виджет HelpBar
 
 ## Описание конструктора
 Принимает на вход один необязательный параметр — объект, состоящий из необязательных полей:
@@ -6,7 +6,7 @@
 * `itemClass`
 	* Тип — `Function`.
 	* Контруктор элементов.
-	* Значение по умолчанию — `zb.ui.widgets.HelpBarItem`.
+	* Значение по умолчанию — `HelpBarItem`.
 
 ## Описание публичных методов
 
@@ -14,17 +14,17 @@
 
 #### Параметры
 * zbKey
-	* Тип — `zb.device.input.Keys`.
+	* Тип — `Keys`.
 
 #### Описание
-Проверяет, должен ли `zb.ui.widgets.HelpBar` обработать переданный `zbKey`.
+Проверяет, должен ли `HelpBar` обработать переданный `zbKey`.
 Возвращает `boolean`.
 
 ### Метод `processHelpBarKey(zbKey[, opt_event])`
 
 #### Параметры
 * zbKey
-	* Тип — `zb.device.input.Keys`.
+	* Тип — `Keys`.
 * opt_event
 	* Тип — `KeyboardEvent=`.
 
@@ -40,7 +40,7 @@
 	* Тип — `string`.
 	* Текст элемента.
 * `keys`
-	* Тип — `Array<zb.device.input.Keys>`.
+	* Тип — `Array<Keys>`.
 	* Массив из клавиш, которые должен обрабатывать элемент.
 * `cssClass`
 	* Тип — `string`.
@@ -48,22 +48,22 @@
 
 #### Описание
 Создает элемент по установленному классу с параметрами `options`.
-Возвращает элемент `zb.ui.widgets.HelpBar` типа `zb.ui.widgets.IHelpBarItem`.
+Возвращает элемент `HelpBar` типа `IHelpBarItem`.
 
 ### Метод `setItems(items)`
 
 #### Параметры
 * items
-	* Тип — `Array<?zb.ui.widgets.IHelpBarItem>`
+	* Тип — `Array<?IHelpBarItem>`
 
 #### Описание
-Устанавливает элементы в `zb.ui.widgets.HelpBar`.
+Устанавливает элементы в `HelpBar`.
 
 ### Метод `setOrder(order)`
 
 #### Параметры
 * order
-	* Тип — `?Array<zb.device.input.Keys>`.
+	* Тип — `?Array<Keys>`.
 
 #### Описание
 Устанавливает порядок отображения элементов согласно позиции их клавиш в массиве.
@@ -71,16 +71,16 @@
 ### Метод `clear()`
 
 #### Описание
-Удаляет все элементы `zb.ui.widgets.HelpBar`.
+Удаляет все элементы `HelpBar`.
 
 ### Метод `getItem(zbKey)`
 
 #### Параметры
 * zbKey
-	* Тип — `zb.device.input.Keys`.
+	* Тип — `Keys`.
 
 #### Описание
-Возвращает элемент `zb.ui.widgets.HelpBar` обрабатывающий клавишу `zbKey`.
+Возвращает элемент `HelpBar` обрабатывающий клавишу `zbKey`.
 
 ## Использование паттерна фабрика
 
@@ -88,13 +88,13 @@
 
     /**
      * @param {function()=} opt_callback
-     * @return {zb.ui.widgets.HelpBarItem}
+     * @return {HelpBarItem}
      */
-    someApp.widgets.helpBarItemFactory.back = function(opt_callback) {
-        var item = new zb.ui.widgets.HelpBarItem({
+    helpBarItemFactory.back = function(opt_callback) {
+        const item = new HelpBarItem({
             cssClass: '_back',
             label: 'Назад',
-            keys: [zb.device.input.Keys.BACK]
+            keys: [Keys.BACK]
         });
 
         item.on(item.EVENT_CLICK, function() {
@@ -106,13 +106,13 @@
 
     /**
      * @param {function()=} opt_callback
-     * @return {zb.ui.widgets.HelpBarItem}
+     * @return {HelpBarItem}
      */
-    someApp.widgets.helpBarItemFactory.exit = function(opt_callback) {
-        var item = new zb.ui.widgets.HelpBarItem({
+    helpBarItemFactory.exit = function(opt_callback) {
+        const item = new HelpBarItem({
             cssClass: '_exit',
             label: 'Выход',
-            keys: [zb.device.input.Keys.EXIT]
+            keys: [Keys.EXIT]
         });
 
         item.on(item.EVENT_CLICK, function() {
@@ -124,7 +124,7 @@
 
 ### Интеграция со сценой
 
-    someApp.scenes.SomeScene = class extends zb.layers.CuteScene {
+    class SomeScene extends CuteScene {
         constructor() {
             super();
         
@@ -145,10 +145,10 @@
          * @protected
          */
         _createHelpBar() {
-            this._helpBar = new zb.ui.widgets.HelpBar;
+            this._helpBar = new HelpBar;
             this._helpBar.setItems([
-                someApp.widgets.helpBarItemFactory.back(),
-                someApp.widgets.helpBarItemFactory.exit()
+                helpBarItemFactory.back(),
+                helpBarItemFactory.exit()
             ]);
 
             this._container.appendChild(this._helpBar.getContainer());

@@ -1,6 +1,22 @@
 Руководство по миграции
 -----------------------
 
+## С версии 1.0.0 на версию 2.0.0-alpha.1
+
+Управление зависимостями было изменено с библиотеки google Closure (`goog.require` и` goog.provide`) на ECMAScript
+модули (`import` и` export`). В результате эта версия полностью несовместима со старыми проектами.
+
+Миграция кодовой базы довольно проста: `goog.require` должен быть заменен соответствующими операторами `import`,
+а `goog.provide` —` export`, конфигурация проекта так же должна быть обновлена.
+
+Пример использования ECMAScript модулей:
+
+```js
+import DataList from 'ui/data/list';
+import Button from 'ui/widgets/button/button';
+import AbstractKeyboard, {Action as AbstractKeyboardAction} from 'ui/widgets/keyboard/abstract-keyboard';
+```
+
 ## С версии 0.5.3 на версию 1.0.0
 
 * Все виджеты перенесены в неймспейс `widgets`. Например, `zb.ui.Button` -> `zb.ui.widgets.Button`.

@@ -1,6 +1,12 @@
 {
   "name": "zombiebox-extension-ui",
-  "version": "1.0.0",
+  "version": "2.0.0-alpha.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/interfaced/zombiebox-extension-ui"
+  },
+  "main": "index.js",
+  "module": "lib/",
   "description": "UI-components library for ZombieBox framework",
   "license": "MIT",
   "author": "Interfaced (http://interfaced.tv)",
@@ -19,36 +25,37 @@
     "lib"
   ],
   "scripts": {
-    "test": "karma start karma.components.conf.js --single-run",
-    "lint.code": "eslint index.js lib",
+    "test": "karma start test/karma.components.conf.js",
+    "lint.code": "eslint index.js lib test --ignore-pattern test/generated",
     "lint.styles": "stylelint './lib/**/*.css'"
   },
   "peerDependencies": {
-    "zombiebox": "^1.0.0"
+    "zombiebox": "^2.0.0-alpha.1"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
+    "cutejs": "^2.0.0-alpha.1",
     "dirty-chai": "^2.0.1",
     "eslint": "5.13.0",
     "eslint-config-interfaced": "1.5.0",
-    "eslint-plugin-goog": "1.0.0",
+    "eslint-plugin-import": "2.16.0",
     "eslint-plugin-interfaced": "1.6.1",
+    "eslint-import-resolver-alias": "1.1.2",
     "eslint-plugin-node": "8.0.1",
-    "karma": "^3.0.0",
+    "karma": "^4.0.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
-    "karma-closure": "github:ifaced/karma-closure",
-    "karma-cutejs-preprocessor": "^0.1.3",
-    "karma-junit-reporter": "^1.2.0",
+    "karma-dirty-chai": "^2.0.0",
     "karma-mocha": "^1.3.0",
+    "karma-module-resolver-preprocessor": "^1.1.1",
     "karma-sinon-chai": "^2.0.2",
     "mocha": "^5.2.0",
     "mocha-test-steps": "^0.1.3",
-    "sinon": "^6.3.4",
-    "sinon-chai": "^3.2.0",
-    "stylelint": "9.1.3",
+    "sinon": "^7.2.3",
+    "sinon-chai": "^3.3.0",
+    "stylelint": "9.10.1",
     "stylelint-config-interfaced": "0.1.0",
-    "stylelint-order": "0.8.1",
-    "zombiebox": "^1.0.0"
+    "stylelint-order": "2.0.0",
+    "zombiebox": "^2.0.0-alpha.1"
   }
 }

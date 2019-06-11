@@ -1,26 +1,25 @@
-# Виджет zb.ui.widgets.Throbber
+# Виджет Throbber
 
 ## Сценарии использования
 
 ### Глобальный троббер по центру экрана
 
-Сам по себе `zb.ui.widgets.Throbber` не имеет функции центрирования. Это нужно делать на уровне наследника или используя агрегатор.
+Сам по себе `Throbber` не имеет функции центрирования. Это нужно делать на уровне наследника или используя агрегатор.
 Наиболее удобным является второй вариант. Минимальный код для его реализации представлен ниже.
 
 #### javascript:
 
 ```javascript
-goog.provide('some.Application');
-goog.require('zb.html');
-goog.require('zb.ui.widgets.Throbber');
+import {show, hide} from 'zb/html';
+import Throbber from 'ui/widgets/throbber';
 
 
 
 /**
  * @constructor
- * @extends {some.BaseApplication}
+ * @extends {BaseApplication}
  */
-some.Application = class extends some.BaseApplication {
+class Application extends BaseApplication {
 	constructor() {
 		super();
 
@@ -52,27 +51,27 @@ some.Application = class extends some.BaseApplication {
 	 * @protected
 	 */
 	_createThrobber() {
-		var throbber = new zb.ui.widgets.Throbber;
+		const throbber = new Throbber;
 	
-		var throbberContainer = zb.html.div('a-throbber zb-fullscreen');
+		const throbberContainer = div('a-throbber zb-fullscreen');
 		throbberContainer.appendChild(this._throbber.getContainer());
 		this._body.appendChild(throbberContainer);
 		
-		this._throbber.on(this._throbber.EVENT_START, function() {
-			zb.html.show(throbberContainer);
+		this._throbber.on(this._throbber.EVENT_START, () => {
+			show(throbberContainer);
 		});
-		this._throbber.on(this._throbber.EVENT_STOP, function() {
-			zb.html.hide(throbberContainer);
+		this._throbber.on(this._throbber.EVENT_STOP, () => {
+			hide(throbberContainer);
 		});
 	}
 };
 
 
 /**
- * @type {?zb.ui.widgets.Throbber}
+ * @type {?Throbber}
  * @protected
  */
-some.Application.prototype._throbber;
+Application.prototype._throbber;
 ```
 
 #### CSS:

@@ -1,11 +1,11 @@
-{{$ zb.ui.widgets.templates.extendedList.extendedList }}
+{{+ import ScrollBar from "ui/widgets/scroll-bar/scroll-bar"; }}
 
 <div class="w-zbui-base-list w-zbui-extended-list">
 	<div class="w-zbui-base-list__wrap" data-export-id="{{@wrapper}}">
 		<div class="w-zbui-base-list__slider" data-export-id="{{@slider}}"></div>
 	</div>
 
-	{{% zb.ui.widgets.ScrollBar, {}, bar }}
+	{{% ScrollBar, {}, bar }}
 
 	<div class="w-zbui-extended-list__arrow _up" data-export-id="{{@arrowUp}}"></div>
 	<div class="w-zbui-extended-list__arrow _down" data-export-id="{{@arrowDown}}"></div>
