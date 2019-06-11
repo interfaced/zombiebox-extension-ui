@@ -1,6 +1,6 @@
 {
   "name": "zombiebox-extension-ui",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/interfaced/zombiebox-extension-ui"
@@ -30,7 +30,8 @@
     "lint.styles": "stylelint './lib/**/*.css'"
   },
   "peerDependencies": {
-    "zombiebox": "^2.0.0-alpha.1"
+    "zombiebox": "^2.0.0-alpha.2",
+    "zombiebox-extension-cutejs": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -56,6 +57,7 @@
     "stylelint": "9.10.1",
     "stylelint-config-interfaced": "0.1.0",
     "stylelint-order": "2.0.0",
-    "zombiebox": "^2.0.0-alpha.1"
+    "zombiebox": "^2.0.0-alpha.2",
+    "zombiebox-extension-cutejs": "^1.0.0"
   }
 }

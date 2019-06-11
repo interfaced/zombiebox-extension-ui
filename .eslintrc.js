@@ -15,6 +15,7 @@ module.exports = {
 					'import/resolver': {
 						alias: [
 							['zb', resolveModulePath('zombiebox')],
+							['cutejs', resolveModulePath('zombiebox-extension-cutejs')],
 							['ui', join(__dirname, 'lib')]
 						]
 					}

@@ -7,7 +7,7 @@ function resolveZbModule(name) {
 }
 
 const zbPath = resolveZbModule('zombiebox');
-const cutejsPath = resolveZbModule('cutejs');
+const cutejsPath = resolveZbModule('zombiebox-extension-cutejs');
 const generatedPath = path.resolve(__dirname, 'generated');
 const uiPath = path.resolve(__dirname, '..', 'lib');
 const testsPath = path.resolve(__dirname, 'components');
