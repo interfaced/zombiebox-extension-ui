@@ -20,7 +20,6 @@ describe('DynamicList step-by-step', () => {
 	let instance;
 
 	it('Step by step', () => {
-
 		when('creating dynamic list', () => {
 			instance = new DynamicList((from, to) => loadRandom(from, to), {
 				startFrom: 0,

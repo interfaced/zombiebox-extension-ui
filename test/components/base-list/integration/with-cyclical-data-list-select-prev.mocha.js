@@ -23,7 +23,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting prev item', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select prev item', () => {
@@ -50,7 +49,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting prev prev item', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select prev prev item', () => {
@@ -79,7 +77,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting second and prev item', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select second and prev item', () => {
@@ -103,7 +100,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting prev index via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select prev index', () => {
@@ -130,7 +126,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting prev prev index via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select prev prev index', () => {
@@ -159,7 +154,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting second item and prev index via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select last item and prev index', () => {
@@ -183,7 +177,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting prev line via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select prev index', () => {
@@ -210,7 +203,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting prev prev line via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select prev prev line', () => {
@@ -239,7 +231,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting second item and prev line via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select second item and prev line', () => {
@@ -268,7 +259,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting third item and prev line via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select third item and prev line', () => {
@@ -298,7 +288,6 @@ describe('BaseListDataList with CyclicalList: select prev', () => {
 	});
 
 	it('Selecting second line and prev line via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select second line and prev line', () => {

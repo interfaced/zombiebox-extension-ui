@@ -12,8 +12,6 @@ describe('BaseListDataList: remove one item', () => {
 	let bufferPromise;
 
 	beforeEach(() => {
-
-
 		given('created baselist-datalist with source', () => {
 			buffer = createBuffer({
 				padding: 1,
@@ -32,7 +30,6 @@ describe('BaseListDataList: remove one item', () => {
 	});
 
 	it('Check size on element removing', () => {
-
 		when('remove first element', () => {
 			dataList.removeAt(0);
 		});
@@ -47,7 +44,6 @@ describe('BaseListDataList: remove one item', () => {
 	});
 
 	it('Remove selected element', () => {
-
 		when('remove first element', () => {
 			dataList.removeAt(0);
 		});
@@ -75,7 +71,6 @@ describe('BaseListDataList: remove one item', () => {
 	});
 
 	it('Remove not selected element', () => {
-
 		when('remove first element', () => {
 			dataList.removeAt(1);
 		});
@@ -98,7 +93,6 @@ describe('BaseListDataList: remove one item', () => {
 	});
 
 	it('Remove element out of buffer', () => {
-
 		when('remove first element', () => {
 			dataList.removeAt(6);
 		});

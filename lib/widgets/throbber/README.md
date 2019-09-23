@@ -28,7 +28,7 @@ class Application extends BaseApplication {
 
 
 	/**
-	 * @param {IThenable} job
+	 * @param {Promise} job
 	 */
 	addThrobberJob(job) {
 		if (this._throbber) {

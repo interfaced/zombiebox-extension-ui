@@ -27,11 +27,11 @@ export const createDataList = (array) => new List(array);
 
 
 /**
- * @param {Options=} opt_options
+ * @param {Options=} options
  * @return {AbstractBaseListBuffer}
  */
-export const createBuffer = (opt_options) => new BaseListDataList(
-	opt_options || defaultOptions,
+export const createBuffer = (options) => new BaseListDataList(
+	options || defaultOptions,
 	(...args) => {
 		changeSpy(...args);
 	},
@@ -44,7 +44,7 @@ export const createBuffer = (opt_options) => new BaseListDataList(
 /**
  * @param {AbstractBaseListBuffer} buffer
  * @param {?List<string>} source
- * @return {IThenable<AbstractBaseListBuffer>}
+ * @return {Promise<AbstractBaseListBuffer>}
  */
 export const setBufferSource = (buffer, source) => {
 	buffer.setSource(source);
@@ -86,7 +86,7 @@ export const createDefaultDataList = () => {
 
 
 /**
- * @return {IThenable<AbstractBaseListBuffer>}
+ * @return {Promise<AbstractBaseListBuffer>}
  */
 export const createDefaultBuffer = () => {
 	const buffer = createBuffer();
@@ -121,7 +121,7 @@ export const createOtherDataList = () => {
 
 
 /**
- * @return {IThenable<AbstractBaseListBuffer>}
+ * @return {Promise<AbstractBaseListBuffer>}
  */
 export const createOtherBuffer = () => {
 	const buffer = createBuffer();
@@ -147,7 +147,7 @@ export const createEmptyDataList = () => {
 
 
 /**
- * @return {IThenable<AbstractBaseListBuffer>}
+ * @return {Promise<AbstractBaseListBuffer>}
  */
 export const createEmptyBuffer = () => {
 	const buffer = createBuffer();

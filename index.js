@@ -24,13 +24,7 @@ class Extension extends AbstractExtension {
 	 * @override
 	 */
 	getConfig() {
-		return {
-			postcss: {
-				presetEnv: {
-					stage: 1
-				}
-			}
-		};
+		return {};
 	}
 
 	/**

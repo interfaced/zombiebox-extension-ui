@@ -10,7 +10,6 @@ describe('Throbber', () => {
 	const then = mochaTestSteps.then;
 
 	describe('Class', () => {
-
 		it('class: Throbber', () => {
 			expect(Throbber).is.a('function');
 		});
@@ -23,7 +22,6 @@ describe('Throbber', () => {
 	});
 
 	describe('Arguments', () => {
-
 		it('No arguments', () => {
 			const throbber = new Throbber();
 

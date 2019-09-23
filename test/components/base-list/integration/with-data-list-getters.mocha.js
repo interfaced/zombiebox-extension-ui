@@ -11,14 +11,12 @@ describe('BaseListDataList: getters', () => {
 	let buffer;
 
 	beforeEach(() => {
-
 		given('created empty baselist-datalist', () => {
 			buffer = createBuffer();
 		});
 	});
 
 	it('When null', () => {
-
 		when('set source', () => setBufferSource(buffer, null));
 
 		then('local variables has values', () => {
@@ -42,7 +40,6 @@ describe('BaseListDataList: getters', () => {
 	});
 
 	it('When empty array', () => {
-
 		when('set source', () => {
 			const dataList = createEmptyDataList();
 			return setBufferSource(buffer, dataList);
@@ -69,7 +66,6 @@ describe('BaseListDataList: getters', () => {
 	});
 
 	it('When size is 0', () => {
-
 		when('set source', () => {
 			const array = createDefaultArray().slice(0, 1);
 			const dataList = new List(array);
@@ -97,7 +93,6 @@ describe('BaseListDataList: getters', () => {
 	});
 
 	it('When size is 2', () => {
-
 		when('set source', () => {
 			const array = createDefaultArray().slice(0, 2);
 			const dataList = new List(array);
@@ -125,7 +120,6 @@ describe('BaseListDataList: getters', () => {
 	});
 
 	it('When size is 3', () => {
-
 		when('set source', () => {
 			const array = createDefaultArray().slice(0, 3);
 			const dataList = new List(array);

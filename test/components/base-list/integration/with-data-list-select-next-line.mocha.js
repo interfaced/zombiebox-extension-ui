@@ -39,7 +39,6 @@ describe('BaseListDataList: select next line', () => {
 	// '90', '91', '92', '93'
 
 	it('Selecting 71-th item', () => {
-
 		given('created baselist-datalist', () => setBufferSource(buffer, dataList)
 			.then(() => {
 				changeSpy.resetHistory();
@@ -68,7 +67,6 @@ describe('BaseListDataList: select next line', () => {
 	});
 
 	it('Selecting next lines after 71-th item', () => {
-
 		given('created baselist-datalist', () => setBufferSource(buffer, dataList)
 			.then(() => {
 				dataList.selectAt(71);

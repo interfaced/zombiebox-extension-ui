@@ -30,7 +30,6 @@ describe('BaseListDataList: set source', () => {
 	});
 
 	it('Setting empty List', () => {
-
 		given('empty given to fix mocha-test-steps bug', noop);
 
 		when('set empty data-list', () => {
@@ -52,7 +51,6 @@ describe('BaseListDataList: set source', () => {
 	});
 
 	it('Setting not empty List', () => {
-
 		given('empty given to fix mocha-test-steps bug', noop);
 
 		when('set default data-list', () => {
@@ -81,7 +79,6 @@ describe('BaseListDataList: set source', () => {
 	// Repeated setting
 
 	it('Setting other List', () => {
-
 		given('set default data-list', () => {
 			const dataList = createDefaultDataList();
 			return setBufferSource(buffer, dataList)
@@ -140,7 +137,6 @@ describe('BaseListDataList: set source', () => {
 	});
 
 	it('Re-setting almost same List', () => {
-
 		given('set default data-list', () => {
 			const dataList = createDefaultDataList();
 			return setBufferSource(buffer, dataList)
@@ -203,7 +199,6 @@ describe('BaseListDataList: set source', () => {
 	// null
 
 	it('Setting null', () => {
-
 		given('empty given to fix mocha-test-steps bug', noop);
 
 		when('set null', () => setBufferSource(buffer, null));
@@ -222,7 +217,6 @@ describe('BaseListDataList: set source', () => {
 	});
 
 	it('Re-setting null', () => {
-
 		given('set null', () => setBufferSource(buffer, null)
 			.then(() => {
 				changeSpy.resetHistory();
@@ -245,7 +239,6 @@ describe('BaseListDataList: set source', () => {
 	});
 
 	it('Setting null after List', () => {
-
 		given('set default data-list', () => {
 			const dataList = createDefaultDataList();
 			return setBufferSource(buffer, dataList)
@@ -272,7 +265,6 @@ describe('BaseListDataList: set source', () => {
 	});
 
 	it('Setting List after null', () => {
-
 		given('set null', () => setBufferSource(buffer, null)
 			.then(() => {
 				changeSpy.resetHistory();

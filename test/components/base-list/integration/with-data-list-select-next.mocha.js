@@ -21,7 +21,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting next item', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select next item', () => {
@@ -43,7 +42,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting next next item', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select next next item', () => {
@@ -67,7 +65,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting last but one and last item', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select last but one and next item', () => {
@@ -96,7 +93,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting next after last item', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select last and next item', () => {
@@ -124,7 +120,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting next index via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select next index', () => {
@@ -146,7 +141,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting next next index via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select next next index', () => {
@@ -170,7 +164,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting last but one item and next index via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select last item and next index', () => {
@@ -199,7 +192,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting last item and next index via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select last item and next line', () => {
@@ -227,7 +219,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting next line via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select next line', () => {
@@ -249,7 +240,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting next next line via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select next next line', () => {
@@ -280,7 +270,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting last but one line and next line via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select last but one item and next line', () => {
@@ -310,7 +299,6 @@ describe('BaseListDataList: select next', () => {
 	});
 
 	it('Selecting last item and next line via buffer', () => {
-
 		given('created baselist-datalist', () => bufferPromise);
 
 		when('select last item and next line', () => {

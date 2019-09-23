@@ -20,12 +20,12 @@
 Проверяет, должен ли `HelpBar` обработать переданный `zbKey`.
 Возвращает `boolean`.
 
-### Метод `processHelpBarKey(zbKey[, opt_event])`
+### Метод `processHelpBarKey(zbKey[, event])`
 
 #### Параметры
 * zbKey
 	* Тип — `Keys`.
-* opt_event
+* event
 	* Тип — `KeyboardEvent=`.
 
 #### Описание
@@ -87,10 +87,10 @@
 ### Создание кнопки
 
     /**
-     * @param {function()=} opt_callback
+     * @param {function()=} callback
      * @return {HelpBarItem}
      */
-    helpBarItemFactory.back = function(opt_callback) {
+    helpBarItemFactory.back = function(callback) {
         const item = new HelpBarItem({
             cssClass: '_back',
             label: 'Назад',
@@ -98,17 +98,17 @@
         });
 
         item.on(item.EVENT_CLICK, function() {
-            opt_callback ? opt_callback() : app.back();
+            callback ? callback() : app.back();
         });
 
         return item;
     };
 
     /**
-     * @param {function()=} opt_callback
+     * @param {function()=} callback
      * @return {HelpBarItem}
      */
-    helpBarItemFactory.exit = function(opt_callback) {
+    helpBarItemFactory.exit = function(callback) {
         const item = new HelpBarItem({
             cssClass: '_exit',
             label: 'Выход',
@@ -116,7 +116,7 @@
         });
 
         item.on(item.EVENT_CLICK, function() {
-            opt_callback ? opt_callback() : app.exit();
+            callback ? callback() : app.exit();
         });
 
         return item;
@@ -134,11 +134,11 @@
         /**
          * @override
          */
-        processKey(zbKey, opt_event) {
-            if (super.processKey(zbKey, opt_event)) {
+        processKey(zbKey, event) {
+            if (super.processKey(zbKey, event)) {
                 return true;
             }
-            return this._helpBar.processHelpBarKey(zbKey, opt_event);
+            return this._helpBar.processHelpBarKey(zbKey, event);
         }
 
         /**

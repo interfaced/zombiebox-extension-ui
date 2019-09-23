@@ -1,47 +1,48 @@
 {
   "name": "zombiebox-extension-ui",
-  "version": "2.0.0",
+  "version": "2.1.0",
+  "description": "UI-components library for ZombieBox framework",
+  "author": "Interfaced (http://interfaced.tv)",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/interfaced/zombiebox-extension-ui"
+    "url": "git@github.com:interfaced/zombiebox-extension-ui.git"
   },
-  "main": "index.js",
   "module": "lib/",
-  "description": "UI-components library for ZombieBox framework",
-  "license": "MIT",
-  "author": "Interfaced (http://interfaced.tv)",
   "keywords": [
+    "smart-tv",
+    "ui",
     "zombiebox",
-    "zombiebox-extension",
-    "ui"
+    "zombiebox-extension"
   ],
   "files": [
-    "package.json",
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md",
-    "MIGRATION.md",
+    "lib/",
     "index.js",
-    "lib"
+    "package.json",
+    "CHANGELOG.md",
+    "LICENSE",
+    "MIGRATION.md",
+    "README.md"
   ],
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
   "scripts": {
     "test": "karma start test/karma.components.conf.js",
     "lint.code": "eslint index.js lib test --ignore-pattern test/generated",
     "lint.styles": "stylelint './lib/**/*.css'"
   },
-  "peerDependencies": {
-    "zombiebox": "^2.0.0",
-    "zombiebox-extension-cutejs": "^1.2.0"
-  },
   "devDependencies": {
     "chai": "^4.2.0",
     "cutejs": "^2.0.0",
     "dirty-chai": "^2.0.1",
-    "eslint": "5.16.0",
-    "eslint-config-interfaced": "1.5.0",
-    "eslint-plugin-import": "2.17.3",
-    "eslint-plugin-interfaced": "1.6.1",
-    "eslint-import-resolver-alias": "1.1.2",
+    "eslint": "6.2.2",
+    "eslint-config-interfaced": "2.0.0-beta.2",
+    "eslint-import-resolver-zombiebox": "1.0.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-interfaced": "2.0.0-beta.1",
+    "eslint-plugin-jsdoc": "15.8.3",
     "eslint-plugin-node": "9.1.0",
     "karma": "^4.1.0",
     "karma-chai": "^0.1.0",
@@ -56,8 +57,12 @@
     "sinon-chai": "^3.3.0",
     "stylelint": "10.1.0",
     "stylelint-config-interfaced": "0.1.0",
-    "stylelint-order": "3.0.0",
-    "zombiebox": "^2.0.0",
+    "stylelint-order": "3.0.1",
+    "zombiebox": "^2.2.0",
+    "zombiebox-extension-cutejs": "^1.2.0"
+  },
+  "peerDependencies": {
+    "zombiebox": "^2.2.0",
     "zombiebox-extension-cutejs": "^1.2.0"
   }
 }
