@@ -1,17 +1,13 @@
 import {createBuffer, setBufferSource, changeSpy, selectSpy, createDefaultDataList} from '../helper';
 
+const expect = chai.expect;
 
 describe('BaseListDataList: select prev', () => {
-	const expect = chai.expect;
-	const given = mochaTestSteps.given;
-	const when = mochaTestSteps.when;
-	const then = mochaTestSteps.then;
-
 	let dataList;
 	let buffer;
 	let bufferPromise;
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		buffer = createBuffer();
 		dataList = createDefaultDataList();
 		bufferPromise = setBufferSource(buffer, dataList)
@@ -19,197 +15,109 @@ describe('BaseListDataList: select prev', () => {
 				changeSpy.resetHistory();
 				selectSpy.resetHistory();
 			});
+
+		await bufferPromise;
 	});
 
-	it('Selecting prev item', () => {
-		given('created baselist-datalist', () => bufferPromise);
+	it('Selecting prev item', async () => {
+		dataList.selectPrevItem();
 
-		when('select prev item', () => {
-			dataList.selectPrevItem();
-		});
+		expect(selectSpy)
+			.callCount(0);
 
-		then('selectCallback is not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('Selecting prev prev item', () => {
-		given('created baselist-datalist', () => bufferPromise);
+	it('Selecting prev prev item', async () => {
+		dataList.selectPrevItem();
+		dataList.selectPrevItem();
 
-		when('select prev prev item', () => {
-			dataList.selectPrevItem();
-			dataList.selectPrevItem();
-		});
+		expect(selectSpy)
+			.callCount(0);
 
-		then('selectCallback is not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('Selecting second and prev item', () => {
-		given('created baselist-datalist', () => bufferPromise);
+	it('Selecting second and prev item', async () => {
+		dataList.selectAt(1);
+		dataList.selectPrevItem();
 
-		when('select second and prev item', () => {
-			dataList.selectAt(1);
-			dataList.selectPrevItem();
-		});
+		expect(selectSpy.withArgs('B', 1, 'A', 0))
+			.callCount(1);
+		expect(selectSpy.withArgs('A', 0, 'B', 1))
+			.callCount(1);
 
-		then('selectCallback is called twice with new item and old item', () => {
-			expect(selectSpy.withArgs('B', 1, 'A', 0))
-				.callCount(1);
-			expect(selectSpy.withArgs('A', 0, 'B', 1))
-				.callCount(1);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('Selecting prev index via buffer', () => {
-		given('created baselist-datalist', () => bufferPromise);
+	it('Selecting prev index via buffer', async () => {
+		buffer.selectPrevIndex();
 
-		when('select prev index', () => {
-			buffer.selectPrevIndex();
-		});
+		expect(selectSpy)
+			.callCount(0);
 
-		then('selectCallback is not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('Selecting prev prev index via buffer', () => {
-		given('created baselist-datalist', () => bufferPromise);
+	it('Selecting prev prev index via buffer', async () => {
+		buffer.selectPrevIndex();
+		buffer.selectPrevIndex();
 
-		when('select prev prev index', () => {
-			buffer.selectPrevIndex();
-			buffer.selectPrevIndex();
-		});
+		expect(selectSpy)
+			.callCount(0);
 
-		then('selectCallback is not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('Selecting second item and prev index via buffer', () => {
-		given('created baselist-datalist', () => bufferPromise);
+	it('Selecting second item and prev index via buffer', async () => {
+		dataList.selectAt(1);
+		buffer.selectPrevIndex();
 
-		when('select second item and prev index', () => {
-			dataList.selectAt(1);
-			buffer.selectPrevIndex();
-		});
+		expect(selectSpy.withArgs('B', 1, 'A', 0))
+			.callCount(1);
+		expect(selectSpy.withArgs('A', 0, 'B', 1))
+			.callCount(1);
 
-		then('selectCallback is called twice with new item and old item', () => {
-			expect(selectSpy.withArgs('B', 1, 'A', 0))
-				.callCount(1);
-			expect(selectSpy.withArgs('A', 0, 'B', 1))
-				.callCount(1);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('Selecting prev line via buffer', () => {
-		given('created baselist-datalist', () => bufferPromise);
+	it('Selecting prev line via buffer', async () => {
+		buffer.selectPrevLine();
 
-		when('select prev index', () => {
-			buffer.selectPrevLine();
-		});
+		expect(selectSpy)
+			.callCount(0);
 
-		then('selectCallback is not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('Selecting prev prev line via buffer', () => {
-		given('created baselist-datalist', () => bufferPromise);
+	it('Selecting prev prev line via buffer', async () => {
+		buffer.selectPrevLine();
+		buffer.selectPrevLine();
 
-		when('select prev prev line', () => {
-			buffer.selectPrevLine();
-			buffer.selectPrevLine();
-		});
+		expect(selectSpy)
+			.callCount(0);
 
-		then('selectCallback is not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('Selecting second line and prev line via buffer', () => {
-		given('created baselist-datalist', () => bufferPromise);
+	it('Selecting second line and prev line via buffer', async () => {
+		buffer.selectNextLine();
+		buffer.selectPrevLine();
 
-		when('select second line and prev line', () => {
-			buffer.selectNextLine();
-			buffer.selectPrevLine();
-		});
+		expect(selectSpy.withArgs('D', 3, 'A', 0))
+			.callCount(1);
+		expect(selectSpy.withArgs('A', 0, 'D', 3))
+			.callCount(1);
 
-		then('selectCallback is called twice with new item and old item', () => {
-			expect(selectSpy.withArgs('D', 3, 'A', 0))
-				.callCount(1);
-			expect(selectSpy.withArgs('A', 0, 'D', 3))
-				.callCount(1);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 });

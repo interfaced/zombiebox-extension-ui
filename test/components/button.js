@@ -1,5 +1,5 @@
+import Key from 'zb/device/input/key';
 import Button from 'ui/widgets/button/button';
-import Keys from 'zb/device/input/keys';
 
 
 describe('Button', () => {
@@ -97,7 +97,7 @@ describe('Button', () => {
 			});
 			button.onClick(eventClickSpy);
 
-			button.processKey(Keys.ENTER);
+			button.processKey(Key.ENTER);
 
 			expect(eventClickSpy)
 				.callCount(1)
@@ -110,7 +110,7 @@ describe('Button', () => {
 		it('event not firing', () => {
 			button.onClick(eventClickSpy);
 
-			button.processKey(Keys.BACK);
+			button.processKey(Key.BACK);
 
 			expect(eventClickSpy).callCount(0);
 		});

@@ -8,12 +8,13 @@ function resolveZbModule(name) {
 
 const zbPath = resolveZbModule('zombiebox');
 const cutejsPath = resolveZbModule('zombiebox-extension-cutejs');
+const cuteLibPath = resolveZbModule('cutejs');
 const generatedPath = path.resolve(__dirname, 'generated');
 const uiPath = path.resolve(__dirname, '..', 'lib');
 const testsPath = path.resolve(__dirname, 'components');
 
-const [zbJsFiles, cutejsJsFiles, generatedJsFiles, uiJsFiles, testsJsFiles] =
-	[zbPath, cutejsPath, generatedPath, uiPath, testsPath].map((root) => root + '/**/*.js');
+const [zbJsFiles, cutejsJsFiles, generatedJsFiles, uiJsFiles, cuteLibFiles, testsJsFiles] =
+	[zbPath, cutejsPath, generatedPath, uiPath, cuteLibPath, testsPath].map((root) => root + '/**/*.js');
 
 module.exports = (config) => {
 	config.set({
@@ -21,16 +22,16 @@ module.exports = (config) => {
 		singleRun: true,
 
 		frameworks: ['sinon-chai', 'mocha', 'chai', 'dirty-chai'],
-		reporters: ['progress'],
+		reporters: ['mocha'],
 		browsers: ['ChromeHeadless'],
 
 		files: [
-			require.resolve('mocha-test-steps'),
 			{type: 'module', pattern: zbJsFiles},
 			{type: 'module', pattern: cutejsJsFiles},
 			{type: 'module', pattern: generatedJsFiles},
 			{type: 'module', pattern: uiJsFiles},
-			{type: 'module', pattern: testsJsFiles}
+			{type: 'module', pattern: testsJsFiles},
+			{type: 'module', pattern: cuteLibFiles}
 		],
 
 		preprocessors: {
@@ -45,9 +46,11 @@ module.exports = (config) => {
 			aliases: {
 				'zb': zbPath,
 				'cutejs': cutejsPath,
+				'cutejs-lib': cuteLibPath,
 				'generated': generatedPath,
 				'ui': uiPath
-			}
+			},
+			ecmaVersion: 10
 		}
 	});
 };

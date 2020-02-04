@@ -42,7 +42,7 @@ export const loadLater = (from, to) => new Promise((resolve) => {
 	setTimeout(() => {
 		const array = createDefaultArray();
 		resolve(array.slice(from, to + 1));
-	}, 500);
+	}, 100);
 });
 
 
@@ -54,9 +54,8 @@ export const loadLater = (from, to) => new Promise((resolve) => {
 export const loadRandom = (from, to) => {
 	if (Math.random() > 0.5) {
 		return loadNow(from, to);
-	} else {
-		return loadLater(from, to);
 	}
+	return loadLater(from, to);
 };
 
 

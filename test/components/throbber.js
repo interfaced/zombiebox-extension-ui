@@ -1,14 +1,11 @@
 import EventPublisher from 'zb/events/event-publisher';
-import Throbber from 'ui/widgets/throbber/throbber';
 import {number} from 'zb/stub';
+import Throbber from 'ui/widgets/throbber/throbber';
+
+const expect = chai.expect;
 
 
 describe('Throbber', () => {
-	const expect = chai.expect;
-	const given = mochaTestSteps.given;
-	const when = mochaTestSteps.when;
-	const then = mochaTestSteps.then;
-
 	describe('Class', () => {
 		it('class: Throbber', () => {
 			expect(Throbber).is.a('function');
@@ -119,52 +116,30 @@ describe('Throbber', () => {
 			setTimeout(resolve.bind(null), number(0, 2000));
 		});
 
-		it('Events fired for single promise', () => {
-			given('added handlers for events', () => {
-				throbber.on(throbber.EVENT_START, eventStartSpy);
-				throbber.on(throbber.EVENT_STOP, eventStopSpy);
-			});
+		it('Events fired for single promise', async () => {
+			throbber.on(throbber.EVENT_START, eventStartSpy);
+			throbber.on(throbber.EVENT_STOP, eventStopSpy);
 
-			when('set promise', () => {
-				const promise = createDelayedPromise();
-				throbber.wait(promise);
-				return promise;
-			});
+			const promise = createDelayedPromise();
+			throbber.wait(promise);
+			await promise;
 
-			then('EVENT_START called once', () => {
-				expect(eventStartSpy).callCount(1);
-			});
-
-			then('EVENT_STOP called once', () => {
-				expect(eventStopSpy).callCount(1);
-			});
-
-			return then('done');
+			expect(eventStartSpy).callCount(1);
+			expect(eventStopSpy).callCount(1);
 		});
 
-		it('Events fired for miltiple promises', () => {
-			given('added handlers for events', () => {
-				throbber.on(throbber.EVENT_START, eventStartSpy);
-				throbber.on(throbber.EVENT_STOP, eventStopSpy);
-			});
+		it('Events fired for miltiple promises', async () => {
+			throbber.on(throbber.EVENT_START, eventStartSpy);
+			throbber.on(throbber.EVENT_STOP, eventStopSpy);
 
-			when('set promise', () => {
-				const promise1 = createDelayedPromise();
-				const promise2 = createDelayedPromise();
-				throbber.wait(promise1);
-				throbber.wait(promise2);
-				return Promise.all([promise1, promise2]);
-			});
+			const promise1 = createDelayedPromise();
+			const promise2 = createDelayedPromise();
+			throbber.wait(promise1);
+			throbber.wait(promise2);
+			await Promise.all([promise1, promise2]);
 
-			then('EVENT_START called once', () => {
-				expect(eventStartSpy).callCount(1);
-			});
-
-			then('EVENT_STOP called once', () => {
-				expect(eventStopSpy).callCount(1);
-			});
-
-			return then('done');
+			expect(eventStartSpy).callCount(1);
+			expect(eventStopSpy).callCount(1);
 		});
 	})
 		.timeout(5000);

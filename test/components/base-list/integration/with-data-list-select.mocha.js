@@ -1,13 +1,10 @@
 import {createBuffer, setBufferSource, changeSpy, selectSpy, createDefaultDataList} from '../helper';
 
+const expect = chai.expect;
 
-describe('BaseListDataList: select', () => {
-	const expect = chai.expect;
-	const given = mochaTestSteps.given;
-	const when = mochaTestSteps.when;
-	const then = mochaTestSteps.then;
 
-	it('inside passive zone', () => {
+describe('BaseListDataList: select', async () => {
+	it('inside passive zone', async () => {
 		const buffer = createBuffer({
 			padding: 1,
 			lineSize: 3,
@@ -15,31 +12,22 @@ describe('BaseListDataList: select', () => {
 		});
 		const dataList = createDefaultDataList();
 
-		given('created baselist-datalist with source', () => setBufferSource(buffer, dataList)
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
+		await setBufferSource(buffer, dataList);
 
-		when('select element in passive zone', () => {
-			dataList.select('B');
-		});
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		then('selectCallback is called once with new item and old item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('B', 1, 'A', 0);
-		});
+		dataList.select('B');
 
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('B', 1, 'A', 0);
 
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('inside passive zone with shifted index', () => {
+	it('inside passive zone with shifted index', async () => {
 		const buffer = createBuffer({
 			padding: 1,
 			lineSize: 3,
@@ -47,36 +35,25 @@ describe('BaseListDataList: select', () => {
 		});
 		const dataList = createDefaultDataList();
 
+		await setBufferSource(buffer, dataList);
 
-		given('created baselist-datalist with source', () => setBufferSource(buffer, dataList));
+		dataList.select('H');
+		buffer._changeItems();
 
-		given('frame is moved from source beginning', () => {
-			dataList.select('H');
-			buffer._changeItems();
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-			changeSpy.resetHistory();
-			selectSpy.resetHistory();
-		});
+		dataList.select('I');
 
-		when('select element in passive zone', () => {
-			dataList.select('I');
-		});
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('I', 5, 'H', 4);
 
-		then('selectCallback is called once with new item and old item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('I', 5, 'H', 4);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('on border of loadOnLeft zone', () => {
+	it('on border of loadOnLeft zone', async () => {
 		const buffer = createBuffer({
 			padding: 2,
 			lineSize: 3,
@@ -84,32 +61,21 @@ describe('BaseListDataList: select', () => {
 		});
 		const dataList = createDefaultDataList();
 
+		await setBufferSource(buffer, dataList);
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		given('created baselist-datalist with source', () => setBufferSource(buffer, dataList)
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
+		dataList.select('D');
 
-		when('select element on border of loadOnLeft zone', () => {
-			dataList.select('D');
-		});
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('D', 3, 'A', 0);
 
-		then('selectCallback is called once with new item and old item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('D', 3, 'A', 0);
-		});
-
-		then('changeCallback is not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(0);
 	});
 
-	it('on border of buffer (inside loadOnLeft zone)', () => {
+	it('on border of buffer (inside loadOnLeft zone)', async () => {
 		const buffer = createBuffer({
 			padding: 1,
 			lineSize: 3,
@@ -117,37 +83,27 @@ describe('BaseListDataList: select', () => {
 		});
 		const dataList = createDefaultDataList();
 
+		await setBufferSource(buffer, dataList);
 
-		given('created baselist-datalist with source', () => setBufferSource(buffer, dataList)
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		when('select element in on border of buffer zone', () => {
-			dataList.select('D');
-		});
+		dataList.select('D');
 
-		then('selectCallback is called once with new item and old item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('D', 3, 'A', 0);
-		});
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('D', 3, 'A', 0);
 
-		then('changeCallback called once with new buffer contents', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([
-					'A', 'B', 'C',
-					'D', 'E', 'F',
-					'G', 'H', 'I'
-				]);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([
+				'A', 'B', 'C',
+				'D', 'E', 'F',
+				'G', 'H', 'I'
+			]);
 	});
 
-	it('out of buffer', () => {
+	it('out of buffer', async () => {
 		const buffer = createBuffer({
 			padding: 2,
 			lineSize: 3,
@@ -155,44 +111,33 @@ describe('BaseListDataList: select', () => {
 		});
 		const dataList = createDefaultDataList();
 
+		await setBufferSource(buffer, dataList);
 
-		given('created baselist-datalist with source', () => setBufferSource(buffer, dataList));
+		dataList.select('B');
+		buffer._changeItems();
+		dataList.select('E');
 
-		given('selected element is close to frame border', () => {
-			dataList.select('B');
-			buffer._changeItems();
-			dataList.select('E');
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-			changeSpy.resetHistory();
-			selectSpy.resetHistory();
-		});
+		dataList.select('K');
 
-		when('select element out of buffer zone', () => {
-			dataList.select('K');
-		});
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('K', 7, 'E', 1);
 
-		then('selectCallback is called once with new item and old item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('K', 7, 'E', 1);
-		});
-
-		then('changeCallback called once with new buffer contents', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([
-					'D', 'E', 'F',
-					'G', 'H', 'I',
-					'J', 'K', 'L',
-					'M', 'N', 'O',
-					'P', 'Q', 'R'
-				]);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([
+				'D', 'E', 'F',
+				'G', 'H', 'I',
+				'J', 'K', 'L',
+				'M', 'N', 'O',
+				'P', 'Q', 'R'
+			]);
 	});
 
-	it('old element outside new frame', () => {
+	it('old element outside new frame', async () => {
 		const buffer = createBuffer({
 			padding: 1,
 			lineSize: 3,
@@ -200,33 +145,22 @@ describe('BaseListDataList: select', () => {
 		});
 		const dataList = createDefaultDataList();
 
+		await setBufferSource(buffer, dataList);
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		given('created baselist-datalist with source', () => setBufferSource(buffer, dataList)
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
+		dataList.select('Q');
 
-		when('select element far outside current frame', () => {
-			dataList.select('Q');
-		});
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('Q', 4, null, NaN);
 
-		then('selectCallback is called once with null-NaN for old item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('Q', 4, null, NaN);
-		});
-
-		then('changeCallback called once with new frame contents', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([
-					'M', 'N', 'O',
-					'P', 'Q', 'R',
-					'S', 'T', 'U'
-				]);
-		});
-
-		return then('done');
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([
+				'M', 'N', 'O',
+				'P', 'Q', 'R',
+				'S', 'T', 'U'
+			]);
 	});
 });

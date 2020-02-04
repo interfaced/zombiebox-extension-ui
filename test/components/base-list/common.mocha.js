@@ -4,8 +4,6 @@ import {createDefaultDataList, setBufferSource, noop} from './helper';
 
 describe('BaseListDataList', () => {
 	const expect = chai.expect;
-	const when = mochaTestSteps.when;
-	const then = mochaTestSteps.then;
 
 	describe('Class', () => {
 		it('class exists', () => {
@@ -82,15 +80,12 @@ describe('BaseListDataList', () => {
 			expect(buffer.getSource()).is.null();
 		});
 
-		it('set source and get it back', () => {
+		it('set source and get it back', async () => {
 			const dataList = createDefaultDataList();
 
+			await setBufferSource(buffer, dataList);
 
-			when('set new source', () => setBufferSource(buffer, dataList));
-
-			then('set new source', () => {
-				expect(buffer.getSource()).equal(dataList);
-			});
+			expect(buffer.getSource()).equal(dataList);
 		});
 	});
 });

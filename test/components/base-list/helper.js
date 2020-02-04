@@ -53,9 +53,8 @@ export const setBufferSource = (buffer, source) => {
 		return source
 			.preload()
 			.then(() => buffer);
-	} else {
-		return Promise.resolve(buffer);
 	}
+	return Promise.resolve(buffer);
 };
 
 // Default

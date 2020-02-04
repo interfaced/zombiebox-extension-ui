@@ -5,17 +5,12 @@ import {
 	selectSpy,
 	createDefaultDataList,
 	createEmptyDataList,
-	noop,
 	createOtherDataList
 } from '../helper';
 
+const expect = chai.expect;
 
 describe('BaseListDataList: set source', () => {
-	const expect = chai.expect;
-	const given = mochaTestSteps.given;
-	const when = mochaTestSteps.when;
-	const then = mochaTestSteps.then;
-
 	let buffer;
 
 	beforeEach(() => {
@@ -29,268 +24,171 @@ describe('BaseListDataList: set source', () => {
 		selectSpy.resetHistory();
 	});
 
-	it('Setting empty List', () => {
-		given('empty given to fix mocha-test-steps bug', noop);
+	it('Setting empty List', async () => {
+		const dataList = createEmptyDataList();
+		await setBufferSource(buffer, dataList);
 
-		when('set empty data-list', () => {
-			const dataList = createEmptyDataList();
-			return setBufferSource(buffer, dataList);
-		});
+		expect(changeSpy)
+			.callCount(0);
 
-		then('changeCallback not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		then('selectCallback not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(selectSpy)
+			.callCount(0);
 	});
 
-	it('Setting not empty List', () => {
-		given('empty given to fix mocha-test-steps bug', noop);
+	it('Setting not empty List', async () => {
+		const dataList = createDefaultDataList();
+		await setBufferSource(buffer, dataList);
 
-		when('set default data-list', () => {
-			const dataList = createDefaultDataList();
-			return setBufferSource(buffer, dataList);
-		});
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([
+				'A', 'B', 'C',
+				'D', 'E', 'F'
+			]);
 
-		then('changeCallback called once with corresponding set', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([
-					'A', 'B', 'C',
-					'D', 'E', 'F'
-				]);
-		});
-
-		then('selectCallback called once with first item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('A', 0, null, NaN);
-		});
-
-		return then('done');
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('A', 0, null, NaN);
 	});
 
 	// Repeated setting
 
-	it('Setting other List', () => {
-		given('set default data-list', () => {
-			const dataList = createDefaultDataList();
-			return setBufferSource(buffer, dataList)
-				.then(() => {
-					changeSpy.resetHistory();
-					selectSpy.resetHistory();
-				});
-		});
+	it('Setting other List', async () => {
+		const firstList = createDefaultDataList();
+		await setBufferSource(buffer, firstList);
 
-		when('set other data-list', () => {
-			const dataList = createOtherDataList();
-			return setBufferSource(buffer, dataList);
-		});
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		then('changeCallback called once with corresponding set', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([
-					'alpha', 'beta', 'gamma',
-					'delta', 'epsilon', 'zeta'
-				]);
-		});
+		const secondList = createOtherDataList();
+		await setBufferSource(buffer, secondList);
 
-		then('selectCallback called once with first item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('alpha', 0, null, NaN);
-		});
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([
+				'alpha', 'beta', 'gamma',
+				'delta', 'epsilon', 'zeta'
+			]);
 
-		return then('done');
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('alpha', 0, null, NaN);
 	});
 
-	it('Re-setting same List', () => {
+	it('Re-setting same List', async () => {
+		const dataList = createDefaultDataList();
+		await setBufferSource(buffer, dataList);
+
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
+
+		expect(changeSpy)
+			.callCount(0);
+
+
+		expect(selectSpy)
+			.callCount(0);
+	});
+
+	it('Re-setting almost same List', async () => {
+		const firstList = createDefaultDataList();
+		await setBufferSource(buffer, firstList);
+
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
+
+		const secondList = createDefaultDataList();
+		await setBufferSource(buffer, secondList);
+
+		expect(changeSpy)
+			.callCount(0);
+
+		expect(selectSpy)
+			.callCount(0);
+	});
+
+	it('Re-setting same List after null', async () => {
 		const dataList = createDefaultDataList();
 
+		await setBufferSource(buffer, dataList);
+		await setBufferSource(buffer, null);
 
-		given('set default data-list', () => setBufferSource(buffer, dataList)
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		when('set same data-list', () => setBufferSource(buffer, dataList));
+		await setBufferSource(buffer, dataList);
 
-		then('changeCallback not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([
+				'A', 'B', 'C',
+				'D', 'E', 'F'
+			]);
 
-		then('selectCallback not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('A', 0, null, NaN);
 	});
 
-	it('Re-setting almost same List', () => {
-		given('set default data-list', () => {
-			const dataList = createDefaultDataList();
-			return setBufferSource(buffer, dataList)
-				.then(() => {
-					changeSpy.resetHistory();
-					selectSpy.resetHistory();
-				});
-		});
 
-		when('set almost same data-list', () => {
-			const dataList = createDefaultDataList();
-			return setBufferSource(buffer, dataList);
-		});
+	it('Setting null', async () => {
+		await setBufferSource(buffer, null);
 
-		then('changeCallback not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
+		expect(changeSpy)
+			.callCount(0);
 
-		then('selectCallback not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		return then('done');
+		expect(selectSpy)
+			.callCount(0);
 	});
 
-	it('Re-setting same List after null', () => {
+	it('Re-setting null', async () => {
+		await setBufferSource(buffer, null);
+
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
+
+		expect(changeSpy)
+			.callCount(0);
+
+		expect(selectSpy)
+			.callCount(0);
+	});
+
+	it('Setting null after List', async () => {
 		const dataList = createDefaultDataList();
+		await setBufferSource(buffer, dataList);
 
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		given('set default data-list', () => setBufferSource(buffer, dataList));
+		await setBufferSource(buffer, null);
 
-		given('set null', () => setBufferSource(buffer, null)
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([]);
 
-		when('set same data-list', () => setBufferSource(buffer, dataList));
-
-		then('changeCallback called once with corresponding set', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([
-					'A', 'B', 'C',
-					'D', 'E', 'F'
-				]);
-		});
-
-		then('selectCallback called once with first item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('A', 0, null, NaN);
-		});
-
-		return then('done');
+		expect(selectSpy)
+			.callCount(0);
 	});
 
-	// null
+	it('Setting List after null', async () => {
+		await setBufferSource(buffer, null);
 
-	it('Setting null', () => {
-		given('empty given to fix mocha-test-steps bug', noop);
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		when('set null', () => setBufferSource(buffer, null));
+		const dataList = createDefaultDataList();
+		await setBufferSource(buffer, dataList);
 
-		then('changeCallback not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([
+				'A', 'B', 'C',
+				'D', 'E', 'F'
+			]);
 
-		then('selectCallback not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		return then('done');
-	});
-
-	it('Re-setting null', () => {
-		given('set null', () => setBufferSource(buffer, null)
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
-
-		when('re-set null', () => setBufferSource(buffer, null));
-
-		then('changeCallback not called', () => {
-			expect(changeSpy)
-				.callCount(0);
-		});
-
-		then('selectCallback not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		return then('done');
-	});
-
-	it('Setting null after List', () => {
-		given('set default data-list', () => {
-			const dataList = createDefaultDataList();
-			return setBufferSource(buffer, dataList)
-				.then(() => {
-					changeSpy.resetHistory();
-					selectSpy.resetHistory();
-				});
-		});
-
-		when('set null', () => setBufferSource(buffer, null));
-
-		then('changeCallback called once with corresponding set', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([]);
-		});
-
-		then('selectCallback not called', () => {
-			expect(selectSpy)
-				.callCount(0);
-		});
-
-		return then('done');
-	});
-
-	it('Setting List after null', () => {
-		given('set null', () => setBufferSource(buffer, null)
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
-
-		when('set default data-list', () => {
-			const dataList = createDefaultDataList();
-			return setBufferSource(buffer, dataList);
-		});
-
-		then('changeCallback called once with corresponding set', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([
-					'A', 'B', 'C',
-					'D', 'E', 'F'
-				]);
-		});
-
-		then('selectCallback called once with first item', () => {
-			expect(selectSpy)
-				.callCount(1)
-				.calledWith('A', 0, null, NaN);
-		});
-
-		return then('done');
+		expect(selectSpy)
+			.callCount(1)
+			.calledWith('A', 0, null, NaN);
 	});
 });

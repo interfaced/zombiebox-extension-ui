@@ -1,11 +1,8 @@
 import {createBuffer, setBufferSource, changeSpy, selectSpy, createDataList} from '../helper';
 
-describe('BaseListDataList: select next line', () => {
-	const expect = chai.expect;
-	const given = mochaTestSteps.given;
-	const when = mochaTestSteps.when;
-	const then = mochaTestSteps.then;
+const expect = chai.expect;
 
+describe('BaseListDataList: select next line', () => {
 	let buffer;
 	let dataList;
 
@@ -38,65 +35,50 @@ describe('BaseListDataList: select next line', () => {
 	// '84', '85', '86', '87', '88', '89',
 	// '90', '91', '92', '93'
 
-	it('Selecting 71-th item', () => {
-		given('created baselist-datalist', () => setBufferSource(buffer, dataList)
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
+	it('Selecting 71-th item', async () => {
+		await setBufferSource(buffer, dataList);
 
-		when('select 71-th item', () => {
-			dataList.selectAt(71);
-		});
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		then('changeCallback is called once with new buffer contents', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([
-					'48', '49', '50', '51', '52', '53',
-					'54', '55', '56', '57', '58', '59',
-					'60', '61', '62', '63', '64', '65',
-					'66', '67', '68', '69', '70', '71',
-					'72', '73', '74', '75', '76', '77',
-					'78', '79', '80', '81', '82', '83',
-					'84', '85', '86', '87', '88', '89'
-				]);
-		});
+		dataList.selectAt(71);
 
-		return then('done');
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([
+				'48', '49', '50', '51', '52', '53',
+				'54', '55', '56', '57', '58', '59',
+				'60', '61', '62', '63', '64', '65',
+				'66', '67', '68', '69', '70', '71',
+				'72', '73', '74', '75', '76', '77',
+				'78', '79', '80', '81', '82', '83',
+				'84', '85', '86', '87', '88', '89'
+			]);
 	});
 
-	it('Selecting next lines after 71-th item', () => {
-		given('created baselist-datalist', () => setBufferSource(buffer, dataList)
-			.then(() => {
-				dataList.selectAt(71);
-			})
-			.then(() => {
-				changeSpy.resetHistory();
-				selectSpy.resetHistory();
-			}));
+	it('Selecting next lines after 71-th item', async () => {
+		await setBufferSource(buffer, dataList);
 
-		when('select next line five times', () => {
-			buffer.selectNextLine(); // 77-th item
-			buffer.selectNextLine(); // 83-th item
-			buffer.selectNextLine(); // 89-th item
-			buffer.selectNextLine(); // 89-th item
-			buffer.selectNextLine(); // 89-th item
-		});
+		dataList.selectAt(71);
 
-		then('changeCallback is called once with new buffer contents', () => {
-			expect(changeSpy)
-				.callCount(1)
-				.calledWith([
-					'60', '61', '62', '63', '64', '65',
-					'66', '67', '68', '69', '70', '71',
-					'72', '73', '74', '75', '76', '77',
-					'78', '79', '80', '81', '82', '83',
-					'84', '85', '86', '87', '88', '89',
-					'90', '91', '92', '93'
-				]);
-		});
+		changeSpy.resetHistory();
+		selectSpy.resetHistory();
 
-		return then('done');
+		buffer.selectNextLine(); // 77-th item
+		buffer.selectNextLine(); // 83-th item
+		buffer.selectNextLine(); // 89-th item
+		buffer.selectNextLine(); // 89-th item
+		buffer.selectNextLine(); // 89-th item
+
+		expect(changeSpy)
+			.callCount(1)
+			.calledWith([
+				'60', '61', '62', '63', '64', '65',
+				'66', '67', '68', '69', '70', '71',
+				'72', '73', '74', '75', '76', '77',
+				'78', '79', '80', '81', '82', '83',
+				'84', '85', '86', '87', '88', '89',
+				'90', '91', '92', '93'
+			]);
 	});
 });
