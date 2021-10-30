@@ -1,6 +1,6 @@
-const path = require('path');
+import path from 'path';
 
-const {AbstractExtension} = require('zombiebox');
+import {AbstractExtension} from 'zombiebox';
 
 
 /**
@@ -17,7 +17,7 @@ class Extension extends AbstractExtension {
 	 * @override
 	 */
 	getSourcesDir() {
-		return path.join(__dirname, 'lib');
+		return (new URL('lib', import.meta.url)).pathname;
 	}
 
 	/**
@@ -43,4 +43,4 @@ class Extension extends AbstractExtension {
 }
 
 
-module.exports = Extension;
+export default Extension;
